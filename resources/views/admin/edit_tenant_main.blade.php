@@ -93,20 +93,39 @@
                     
                 </div>
 
-                <div class="row">
-
+                <div class="containter">
+                <div class="mt-5">
                     @foreach($persons as $person)
-                    <div class="d-flex  col-md-5 mb-5" style="border: solid; border-radius: 20px ;margin-right:120px; padding:10px">
-                        <div>
-                            <tr>
-                            <h4>{{$person['name']}}</h4>
-                            <h6><a href="{{ route('removeTenant', ['tenant_id' => $person['id']]) }}" onclick="return confirm('Are you sure you want to remove this Tenant?')">Remove</a></h6>
-                            <h6><a href="{{ route('editTenant', ['tenant_id' => $person['id']]) }}">Edit</a></h6>
-                            </tr> 
-                        </div>                               
+                    <div class="d-style btn btn-brc-tp border-2 bgc-white btn-outline-blue btn-h-outline-blue btn-a-outline-blue w-100 my-2 py-3 shadow-sm">
+
+                        <div class="row align-items-center">
+                            <div class="col-12 col-md-4">
+                                <h4 class="pt-3 text-170 text-600 text-primary-d1 letter-spacing">
+                                {{$person['name']}}
+                                </h4>
+                            </div>
+
+                            <div class="col-12 col-md-4 text-center">
+                                <a 
+                                    href="{{ route('editTenant', ['tenant_id' => $person['id']]) }}"
+                                    class="f-n-hover btn btn-primary btn-raised px-4 py-25 w-75 text-600">
+                                    Edit
+                                </a>
+                            </div>
+
+                            <div class="col-12 col-md-4 text-center">
+                                <a 
+                                    href="{{ route('removeTenant', ['tenant_id' => $person['id']]) }}" 
+                                    onclick="return confirm('Are you sure you want to remove this tenant?')" 
+                                    class="f-n-hover btn btn-remove btn-raised px-4 py-25 w-75 text-600">
+                                    Remove
+                                </a>
+                            </div>
+                        </div>
+
                     </div>
                     @endforeach
-
+                </div>
                 </div>
 
 

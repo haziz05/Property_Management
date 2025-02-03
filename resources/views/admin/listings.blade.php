@@ -22,7 +22,6 @@
                 <div class="mt-5">
                     @foreach($properties as $property)
                     <div class="d-style btn btn-brc-tp border-2 bgc-white btn-outline-blue btn-h-outline-blue btn-a-outline-blue w-100 my-2 py-3 shadow-sm">
-                        <!-- Basic Plan -->
                         <div class="row align-items-center">
                             <div class="col-12 col-md-4">
                                 <h4 class="pt-3 text-170 text-600 text-primary-d1 letter-spacing">
