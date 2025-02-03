@@ -1,24 +1,27 @@
 <x-guest-layout>
+    <div class="mt-4" style="color: black;">
+        Please Resgister for an Account Here
+    </div>
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
         <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
+        <div class="mt-4">
+            <x-input-label for="name" :value="__('Name')" style="color: black;"/>
             <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
         <!-- Email Address -->
         <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
+            <x-input-label for="email" :value="__('Email')" style="color: black;"/>
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <!-- Password -->
         <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+            <x-input-label for="password" :value="__('Password')" style="color: black;"/>
 
             <x-text-input id="password" class="block mt-1 w-full"
                             type="password"
@@ -30,7 +33,7 @@
 
         <!-- Confirm Password -->
         <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+            <x-input-label for="password_confirmation" :value="__('Confirm Password')" style="color: black;"/>
 
             <x-text-input id="password_confirmation" class="block mt-1 w-full"
                             type="password"
@@ -41,7 +44,7 @@
 
         <!-- Account Type -->
         <div class="mt-4">
-            <x-input-label for="account" :value="__('Account Type')"/>
+            <x-input-label for="account" :value="__('Account Type')" style="color: balck;"/>
             <select id="account_type" class="block mt-1 w-full" type="text" name="account">
                 <option>Select Account Type</option>
                 <option value="Admin">Admin Account</option>

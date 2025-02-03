@@ -11242,5 +11242,15 @@ body {
   border-radius: 0.375rem !important;
 }
 
-/*Styling below has been added on by Humza Aziz*/
+.btn-manage {
+  background-color: #343a40;
+  border-color: #343a40;
+  color: white;
+}
+
+.btn-remove {
+  background-color: var(--bs-red);
+  border-color: var(--bs-red);
+  color: white;
+}
 

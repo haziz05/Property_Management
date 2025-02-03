@@ -69,17 +69,44 @@
                     
                 </div>
 
-                <div class="row">
-                    @foreach($properties as $property)
-                    <div class="d-flex  col-md-5 mb-5" style="border: solid; border-radius: 20px ;margin-right:120px; padding:10px">
-                        <div>
-                            <h4>{{$property['Address']}}</h4>
-                            <h6><a  href="{{ route('removeProperty', ['property_id' => $property['id']]) }}" onclick="return confirm('Are you sure you want to remove this property?')">Remove</a></h6>
-                            <h6><a  href="{{ route('editProperty', ['property_id' => $property['id']]) }}">Edit</a></h6>
-                        </div>      
+                    <div class="container">
+                    <div class="mt-5">
+                        @foreach($properties as $property)
+                        <div class="d-style btn btn-brc-tp border-2 bgc-white btn-outline-blue btn-h-outline-blue btn-a-outline-blue w-100 my-2 py-3 shadow-sm">
+                            <!-- Basic Plan -->
+                            <div class="row align-items-center">
+                                <div class="col-12 col-md-4">
+                                    <h4 class="pt-3 text-170 text-600 text-primary-d1 letter-spacing">
+                                    {{$property['Address']}}
+                                    </h4>
+
+                                    <div class="text-secondary-d1 text-120">
+                                        {{$property['size']}} sq ft
+                                    </div>
+                                </div>
+
+                                <ul class="list-unstyled mb-0 col-12 col-md-4 text-dark-l1 text-90 text-left my-4 my-md-0">
+                                    <a
+                                        href="{{ route('editProperty', ['property_id' => $property['id']]) }}"
+                                        class="f-n-hover btn btn-primary btn-raised px-4 py-25 w-75 text-600">
+                                        Edit
+                                    </a>
+                                </ul>
+
+                                <div class="col-12 col-md-4 text-center">
+                                    <a 
+                                        href="{{ route('removeProperty', ['property_id' => $property['id']]) }}" 
+                                        onclick="return confirm('Are you sure you want to remove this property?')" 
+                                        class="f-n-hover btn btn-remove btn-raised px-4 py-25 w-75 text-600">
+                                        Remove
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                        @endforeach
                     </div>
-                    @endforeach
-                </div>
+                    </div> 
             </div>
         </main>
 
