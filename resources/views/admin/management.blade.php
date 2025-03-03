@@ -1,42 +1,34 @@
-<!DOCTYPE html>
+@extends('adminlte::page')
 
-@include('header')
+@section('title', 'Management - ' . $property['Address'])
 
+@section('content_header')
+    <h1>Management</h1>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ route('admin_dash') }}">Dashboard</a></li>
+        <li class="breadcrumb-item active">{{ $property['Address'] }}</li>
+    </ol>
+@stop
 
-@include('layouts.topNav')
-<div id="layoutSidenav">
-    @include('layouts.sideNav')
-
-    <!------------------------------------------ Dashboard Screen ----------------------------------------->
-    <div id="layoutSidenav_content">
-        @section('content')
-        <main>
-            <div class="container-fluid px-4">
-                <h1 class="mt-4">Management</h1>
-                <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item active"><a href="{{ route('admin_dash') }}">Dashboard</a>/{{$property['Address']}}</li>
-                </ol>
-                
-                <div>
-
-                    <h1>{{$property['Address']}}</h1>
-                    <h1>Currently {{$total_area}}% of the leasable area is being occupied</h1>
-                    <br><br>
-                    <h4>Information:</h4>
-                    <h5>The total leasable area of this property is {{$property['size']}} sq ft</h5>
-                    <h5>Description: {{$property['description']}}</h5>
-                    
-
-                    <br><br>
-                    <h1>Current Tenanats:</h1>
-                    @foreach($occupied_tenants as $tenant)
-                    <h2><a href="{{ route('currentTenant') }}">{{$tenant['name']}}</a>, currently occupying {{$tenant['area']}} sq ft</h2>                        
-                    @endforeach
-
-                </div>
-            </div>
-        </main>
-        @include('footer')
+@section('content')
+<div class="container-fluid px-4">
+    <div class="card mb-4">
+        <div class="card-body">
+            <h1>{{ $property['Address'] }}</h1>
+            <h2>Currently {{ $total_area }}% of the leasable area is being occupied</h2>
+            <hr>
+            <h4>Information:</h4>
+            <p>The total leasable area of this property is {{ $property['size'] }} sq ft</p>
+            <p>Description: {{ $property['description'] }}</p>
+            <hr>
+            <h1>Current Tenants:</h1>
+            @foreach($occupied_tenants as $tenant)
+                <h4>
+                    <a href="{{ route('currentTenant') }}">{{ $tenant['name'] }}</a>, currently occupying {{ $tenant['area'] }} sq ft
+                </h4>
+            @endforeach
+        </div>
     </div>
 </div>
+@stop
 

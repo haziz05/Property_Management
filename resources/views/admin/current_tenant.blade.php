@@ -1,65 +1,49 @@
-<!DOCTYPE html>
-@include('header')
+@extends('adminlte::page')
 
+@section('title', 'Current Tenants')
 
-@include('layouts.topNav')
-<div id="layoutSidenav">
-    @include('layouts.sideNav')
+@section('content_header')
+    <h1>Current Tenants</h1>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ route('admin_dash') }}">Dashboard</a></li>
+        <li class="breadcrumb-item active">Current Tenants</li>
+    </ol>
+@stop
 
-    <!------------------------------------------ Dashboard Screen ----------------------------------------->
-    <div id="layoutSidenav_content">
-        @section('content')
-        <main>
-            <div class="container-fluid px-4">
-                <h1 class="mt-4">Current Tenants</h1>
-                <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item active"><a href="{{ route('admin_dash') }}">Dashboard</a>/Current Tenants</li>
-                </ol>
-                
-                <div class="containter">
-                <div class="mt-5">
-                    @foreach($persons as $person)
-                    <div class="d-style btn btn-brc-tp border-2 bgc-white btn-outline-blue btn-h-outline-blue btn-a-outline-blue w-100 my-2 py-3 shadow-sm">
-
-                        <div class="row align-items-center">
-                            <div class="col-12 col-md-4">
-                                <h4 class="pt-3 text-170 text-600 text-primary-d1 letter-spacing">
-                                {{$person['name']}}
-                                </h4>
-                            </div>
-
-                            <ul class="list-unstyled mb-0 col-12 col-md-4 text-dark-l1 text-90 text-left my-4 my-md-0">
-                                <li>
-                                    <i class=" text-success-m2 text-110 mr-2 mt-1"></i>
-                                    <span>
-                                    {{$person['phone']}}
-                                    </span>        
-                                </li>
-
-                                <li>
-                                    <i class=" text-success-m2 text-110 mr-2 mt-1"></i>
-                                    <span>
-                                    {{$person['email']}}
-                                    </span>
-                                </li>
-                            </ul>
-
-                            <div class="col-12 col-md-4 text-center">
-                                <a 
-                                    href="{{ route('removeTenant', ['tenant_id' => $person['id']]) }}" 
-                                    onclick="return confirm('Are you sure you want to remove this tenant?')" 
-                                    class="f-n-hover btn btn-remove btn-raised px-4 py-25 w-75 text-600">
-                                    Remove
-                                </a>
-                            </div>
+@section('content')
+<div class="container-fluid">
+    <div class="row">
+        @foreach($persons as $person)
+        <div class="col-12 mb-3">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <!-- Tenant Name -->
+                        <div class="col-md-4">
+                            <h4 class="text-primary">{{ $person['name'] }}</h4>
                         </div>
-
+                        <!-- Tenant Details -->
+                        <div class="col-md-4">
+                            <ul class="list-unstyled mb-0">
+                                <li><strong>Phone:</strong> {{ $person['phone'] }}</li>
+                                <li><strong>Email:</strong> {{ $person['email'] }}</li>
+                            </ul>
+                        </div>
+                        <!-- Action Button -->
+                        <div class="col-md-4 text-center">
+                            <a href="{{ route('removeTenant', ['tenant_id' => $person['id']]) }}" 
+                               onclick="return confirm('Are you sure you want to remove this tenant?')" 
+                               class="btn btn-danger">
+                                Remove
+                            </a>
+                        </div>
                     </div>
-                    @endforeach
-                </div>
                 </div>
             </div>
-        </main>
-        @include('footer')
+        </div>
+        @endforeach
     </div>
 </div>
+@stop
+
+

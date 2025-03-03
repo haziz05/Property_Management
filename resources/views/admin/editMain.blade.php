@@ -1,114 +1,104 @@
-<!--Editing Listings-->
-<!DOCTYPE html>
-@include('header')    
+@extends('adminlte::page')
 
+@section('title', 'Edit Listings')
 
-@include('layouts.topNav')
-<div id="layoutSidenav">
-    @include('layouts.sideNav')
+@section('content_header')
+    <h1>Edit Listings</h1>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ route('admin_dash') }}">Dashboard</a></li>
+        <li class="breadcrumb-item active">Edit Listings</li>
+    </ol>
+@stop
 
-    <!------------------------------------------ Dashboard Screen ----------------------------------------->
-    <div id="layoutSidenav_content">
-        @section('content')
-        <main>
-            <div class="container-fluid px-4">
-                <h1 class="mt-4">Edit</h1>
-                <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item active"><a href="{{ route('admin_dash') }}">Dashboard</a>/Edit</li>
-                </ol>
-                
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <i class="fa-solid fa-plus"></i>
-                        Add
+@section('content')
+<div class="container-fluid">
+    <!-- Card for Adding New Property -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fa-solid fa-plus"></i> Add New Property
+        </div>
+        <div class="card-body">
+            <form action="{{ route('addProperty') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+
+                <div class="mb-3 row">
+                    <label for="address" class="col-sm-2 col-form-label">Address</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="address" name="address" placeholder="Enter Property Address">
+                        @error('address')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
-
-                    <div class="card-body">
-                        <!--Adding Form-->
-                        <form action="{{ route('addProperty') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-
-                            <div class="mb-3 row">
-                                <label for="inputText" class="col-sm-2 col-form-label">Address</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="address" name='address' placeholder="Enter Property Address">
-                                    @error('address')
-                                        <span class="text-danger">{{$message}}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                            
-                            <div class="mb-3 row">
-                                <label for="size" class="col-sm-2 col-form-label">Size</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="size" name="size" placeholder="Enter Property Size">
-                                    @error('size')
-                                        <span class="text-danger">{{$message}}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                            
-                            <div class="mb-3 row">
-                                <label for="description" class="col-sm-2 col-form-label">Description</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="description" name="description" placeholder="Enter Property Description">
-                                    @error('description')
-                                        <span class="text-danger">{{$message}}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                            
-                            <div class="text-end">
-                                <button type="submit" class="btn btn-primary">Add Data</button>
-                            </div>
-                            
-                        </form>
-                    <!--Adding Form-->
-                    </div>
-                    
-                    
                 </div>
 
-                    <div class="container">
-                    <div class="mt-5">
-                        @foreach($properties as $property)
-                        <div class="d-style btn btn-brc-tp border-2 bgc-white btn-outline-blue btn-h-outline-blue btn-a-outline-blue w-100 my-2 py-3 shadow-sm">
-                            <div class="row align-items-center">
-                                <div class="col-12 col-md-4">
-                                    <h4 class="pt-3 text-170 text-600 text-primary-d1 letter-spacing">
-                                    {{$property['Address']}}
-                                    </h4>
+                <div class="mb-3 row">
+                    <label for="size" class="col-sm-2 col-form-label">Size</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="size" name="size" placeholder="Enter Property Size">
+                        @error('size')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
 
-                                    <div class="text-secondary-d1 text-120">
-                                        {{$property['size']}} sq ft
+                <div class="mb-3 row">
+                    <label for="description" class="col-sm-2 col-form-label">Description</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="description" name="description" placeholder="Enter Property Description">
+                        @error('description')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="text-end">
+                    <button type="submit" class="btn btn-primary">Add Data</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Card for Listing Existing Properties -->
+    <div class="card">
+        <div class="card-header">
+            <i class="fa-solid fa-edit"></i> Existing Properties
+        </div>
+        <div class="card-body">
+            <div class="row">
+                @foreach($properties as $property)
+                    <div class="col-12 mb-3">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <!-- Property Info -->
+                                    <div class="col-md-4">
+                                        <h4 class="text-primary">{{ $property['Address'] }}</h4>
+                                        <p class="mb-0 text-secondary">{{ $property['size'] }} sq ft</p>
+                                    </div>
+                                    <!-- Property Description -->
+                                    <div class="col-md-4">
+                                        <p>{{ $property['description'] }}</p>
+                                    </div>
+                                    <!-- Action Buttons -->
+                                    <div class="col-md-4 text-center">
+                                        <a href="{{ route('editProperty', ['property_id' => $property['id']]) }}" class="btn btn-primary mb-2">
+                                            Edit
+                                        </a>
+                                        <a href="{{ route('removeProperty', ['property_id' => $property['id']]) }}" 
+                                           onclick="return confirm('Are you sure you want to remove this property?')" 
+                                           class="btn btn-danger">
+                                            Remove
+                                        </a>
                                     </div>
                                 </div>
-
-                                <ul class="list-unstyled mb-0 col-12 col-md-4 text-dark-l1 text-90 text-left my-4 my-md-0">
-                                    <a
-                                        href="{{ route('editProperty', ['property_id' => $property['id']]) }}"
-                                        class="f-n-hover btn btn-primary btn-raised px-4 py-25 w-75 text-600">
-                                        Edit
-                                    </a>
-                                </ul>
-
-                                <div class="col-12 col-md-4 text-center">
-                                    <a 
-                                        href="{{ route('removeProperty', ['property_id' => $property['id']]) }}" 
-                                        onclick="return confirm('Are you sure you want to remove this property?')" 
-                                        class="f-n-hover btn btn-remove btn-raised px-4 py-25 w-75 text-600">
-                                        Remove
-                                    </a>
-                                </div>
                             </div>
-
                         </div>
-                        @endforeach
                     </div>
-                    </div> 
+                @endforeach
             </div>
-        </main>
-
-        @include('footer')
+        </div>
     </div>
-</div>  
+</div>
+@stop
+
+
