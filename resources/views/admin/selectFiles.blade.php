@@ -31,7 +31,7 @@
         </div>
         
         <!-- Maintenance Files -->
-        @if($filter === 'all' || $filter === 'maintenance')
+        @if($filter === 'maintenance')
         <div class="card-body" id="maintenance-files">
             <div class="table-responsive">
                 <table class="table table-hover">
@@ -67,7 +67,7 @@
         @endif
 
         <!-- Property Files -->
-        @if($filter === 'all' || $filter === 'property')
+        @if($filter === 'property')
         <div class="card-body" id="property-files">
             <div class="table-responsive">
                 <table class="table table-hover">
@@ -97,7 +97,7 @@
         @endif
 
         <!-- Tenant Files -->
-        @if($filter === 'all' || $filter === 'tenant')
+        @if($filter === 'tenant')
         <div class="card-body" id="tenant-files">
             <div class="table-responsive">
                 <table class="table table-hover">
