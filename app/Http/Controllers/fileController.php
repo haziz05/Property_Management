@@ -10,6 +10,7 @@ use App\Models\propertyFile;
 use Illuminate\Http\Request;
 use App\Models\maintenanceFile;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Ui\Presets\React;
 
 class fileController extends Controller
 {
@@ -124,12 +125,31 @@ class fileController extends Controller
     }
 
     //Selecting File Logic
-    //Select Tenant File
-    function showTenantSelect(){
-        $files = tenantFile::all();
-        return view('admin.select.tenantSelect', compact( 'files'));
-    }
 
+    function showSelect(Request $request){
+        // Get the filter value from the query string (default to 'all')
+        $filter = $request->input('filter', 'all');
+
+        // Initialize collections for each file type
+        $maintenanceFiles = collect();
+        $propertyFiles = collect();
+        $tenantFiles = collect();
+
+        // Based on the filter, query only the relevant file types
+        if ( $filter === 'maintenance') {
+            $maintenanceFiles = maintenanceFile::all();
+        }
+        if ( $filter === 'property') {
+            $propertyFiles =propertyFile::all();
+        }
+        if ( $filter === 'tenant') {
+            $tenantFiles = tenantFile::all();
+        }
+
+
+        return view('admin.selectFiles', compact('tenantFiles', 'maintenanceFiles', 'propertyFiles', 'filter'));
+    }
+    //View Tenant File
     public static function viewTenantFiles($id){
         $file = tenantFile::find($id);
         $path = $file->path;
@@ -137,12 +157,7 @@ class fileController extends Controller
         return response()->file(storage_path('app/public/'.$path));
     }
 
-    //Select Maintenace Files
-    function showMaintenanceSelect(){
-        $files = maintenanceFile::all();
-        return view('admin.select.maintenanceSelect', compact( 'files'));
-    }
-
+    //View Maintenace Files
     public static function viewMaintenanceFiles($id){
         $file = maintenanceFile::find($id);
         $path = $file->path;
@@ -150,12 +165,7 @@ class fileController extends Controller
         return response()->file(storage_path('app/public/'.$path));
     }
 
-    //Select Property Files
-    function showPropertySelect(){
-        $files = propertyFile::all();
-        return view('admin.select.propertiesSelect', compact('files'));
-    }
-
+    //View Property Files
     public static function viewPropertyFiles($id){
         $file = propertyFile::find($id);
         $path = $file->path;

@@ -361,21 +361,9 @@ return [
         ],
         [
             'text'    => 'Select Document',
+            'url'     => '/showSelect',
             'icon'    => 'fas fa-file-alt',
-            'submenu' => [
-                [
-                    'text' => 'Tenant',
-                    'url'  => 'showTenantSelect', // or route('showTenantSelect')
-                ],
-                [
-                    'text' => 'Maintenance',
-                    'url'  => 'showMaintenanceSelect', // or route('showMaintenanceSelect')
-                ],
-                [
-                    'text' => 'Properties',
-                    'url'  => 'showPropertySelect', // or route('showPropertySelect')
-                ],
-            ],
+
         ],
     ],
 
@@ -460,12 +448,12 @@ return [
             ],
         ],
         'Sweetalert2' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => '//cdn.jsdelivr.net/npm/sweetalert2@8',
+                    'location' => '//cdn.jsdelivr.net/npm/sweetalert2@11',
                 ],
             ],
         ],

@@ -101,15 +101,13 @@
                                     </div>
                                     <!-- Action Buttons -->
                                     <div class="col-12 col-md-4 text-center">
-                                        <a href="{{ route('editTenant', ['tenant_id' => $person['id']]) }}" class="btn btn-primary mb-2">
-                                            Edit
-                                        </a>
+                                        <div class="col-md-4">
+                                            <p>{{ $person['email'] }}</p>
+                                        </div>
                                     </div>
                                     <div class="col-12 col-md-4 text-center">
-                                        <a href="{{ route('removeTenant', ['tenant_id' => $person['id']]) }}" 
-                                           onclick="return confirm('Are you sure you want to remove this tenant?')" 
-                                           class="btn btn-danger">
-                                            Remove
+                                        <a href="{{ route('editTenant', ['tenant_id' => $person['id']]) }}" class="btn btn-primary mb-2">
+                                            Edit
                                         </a>
                                     </div>
                                 </div>

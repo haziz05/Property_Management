@@ -69,7 +69,7 @@ Route::POST('/uploadMaintenanceFile', [fileController::class, 'uploadMaintenance
 Route::get('/showPropertyUpload', [fileController::class, 'showPropertyUpload'])->name('showPropertyUpload');
 Route::POST('/uploadPropertyFile', [fileController::class, 'uploadPropertyFile'])->name('uploadPropertyFile');
 
-Route::get('/showTenantSelect', [fileController::class, 'showTenantSelect'])->name('showTenantSelect');
+Route::get('/showSelect', [fileController::class, 'showSelect'])->name('showSelect');
 Route::get('/viewTenantFiles/{id}', [fileController::class, 'viewTenantFiles'])->name('viewTenantFiles');
 Route::get('/showMaintenanceSelect', [fileController::class, 'showMaintenanceSelect'])->name('showMaintenanceSelect');
 Route::get('/viewMaintenanceFiles/{id}', [fileController::class, 'viewMaintenanceFiles'])->name('viewMaintenanceFiles');
