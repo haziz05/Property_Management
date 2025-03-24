@@ -71,7 +71,7 @@ class fileController extends Controller
             'email'=>'required|string',
             'date'=>'required|date',
             'file'=>'required|array',
-            'file.*'=>'file|max:5000'
+            'file.*'=>'file|max:90000'
         ]);
 
         foreach($request->file('file') as $currentFile){
@@ -107,7 +107,7 @@ class fileController extends Controller
             'property'=>'required|integer',
             'date'=>'required|date',
             'file'=>'required|array',
-            'file.*'=>'file|max:5000'
+            'file.*'=>'file|max:90000'
         ]);
 
         foreach($request->file('file') as $currentFile){
