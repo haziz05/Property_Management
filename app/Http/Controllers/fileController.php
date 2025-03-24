@@ -31,7 +31,7 @@ class fileController extends Controller
             'email'=>'required|string',
             'date'=>'required|date',
             'file'=>'required|array',
-            'file.*'=>'file|max:5000'
+            'file.*'=>'file|max:90000'
         ]);
 
         foreach($request->file('file') as $currentFile){
@@ -47,6 +47,7 @@ class fileController extends Controller
             $file->save();
         }
         
+        session()->flash('success', 'Tenant file uploaded successfully!');
 
         return redirect('showTenantUpload');
 
@@ -87,6 +88,7 @@ class fileController extends Controller
             $file->save();
         }
 
+        session()->flash('success', 'Maintenance file uploaded successfully!');
 
         return redirect('showMaintenanceUpload');
 
@@ -118,7 +120,7 @@ class fileController extends Controller
             $file->save();
         }
 
-        
+        session()->flash('success', 'Property file uploaded successfully!');
 
         return redirect('showPropertyUpload');
 

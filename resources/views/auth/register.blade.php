@@ -142,8 +142,22 @@
                 @enderror
             </div>
 
+            <!-- Account Type -->
+            <div class="mb-3">
+                <div class="input-group">
+                    <select name="account" id="account" class="form-control" required>
+                        <option value="" disable selected>Select Account Type</option>
+                        <option value="Admin">Admin</option>
+                        <option value="Tenant">Tenant</option>
+                    </select>
+                </div>
+                @error('account')
+                    <div class="text-danger mt-1">{{ $message }}</div>
+                @enderror
+            </div>
+
             <!-- Submit Button -->
-            <div class="mt-4">
+            <div class="mt-5">
                 <button type="submit" class="btn gradient-button w-100">
                     REGISTER
                 </button>
@@ -165,5 +179,3 @@
 </div>
 @stop
 
-@section('js')
-@stop
