@@ -15,7 +15,7 @@
 <div class="container-fluid px-4">
     <div class="card mb-4">
         <div class="card-header">
-            <i class="fa-solid fa-plus"></i> Update Tenant
+            <i class="fas fa-user"></i> Update Tenant
         </div>
         <div class="card-body">
             <form action="{{ route('updateTenant') }}" method="POST" class="mt-4">

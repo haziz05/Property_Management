@@ -15,7 +15,7 @@
 <div class="container-fluid px-4">
     <div class="card mb-4">
         <div class="card-header">
-            <i class="fa-solid fa-plus"></i> Update Property
+            <i class="fas fa-home"></i> Update Property
         </div>
         <div class="card-body">
             <form action="{{ route('updateProperty') }}" method="POST">

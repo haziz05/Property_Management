@@ -15,7 +15,7 @@
 <div class="container-fluid px-4">
     <div class="card mb-4">
         <div class="card-header">
-            <h5>Update Query</h5>
+            <i class="fas fa-chart-area"></i> Update Query
         </div>
         <div class="card-body">
             <form action="{{ route('updateQuery') }}" method="POST">

@@ -14,7 +14,7 @@
 <div class="container-fluid">
     <div class="card mb-4">
         <div class="card-header">
-            <i class="fa-solid fa-plus"></i> Upload
+            <i class="fas fa-upload"></i> Upload
         </div>
         <div class="card-body">
             <form action="{{ route('uploadTenantFile') }}" method="POST" enctype="multipart/form-data">
@@ -41,7 +41,7 @@
                         <select class="form-control" id="property" name="property">
                             <option value="">No Property</option>
                             @foreach($properties as $property)
-                                <option value="{{ $property['id'] }}">{{ $property['Address'] }}</option>
+                                <option value="{{ $property['Address'] }}">{{ $property['Address'] }}</option>
                             @endforeach
                         </select>
                         @error('property')
@@ -83,7 +83,10 @@
                 <div class="mb-3 row">
                     <label for="file" class="col-sm-2 col-form-label">Select File</label>
                     <div class="col-sm-10">
-                        <input type="file" class="form-control" id="file" name="file[]" accept=".jpg,.pdf" multiple>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="file" name="file[]" accept=".jpg,.pdf" multiple>
+                            <label class="custom-file-label" for="file">Choose file</label>
+                        </div>
                         @error('file')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror

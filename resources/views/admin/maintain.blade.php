@@ -15,11 +15,11 @@
     <!-- Queries Card -->
     <div class="card mb-4">
         <div class="card-header">
-            <i class="fa-solid fa-exclamation"></i> Queries
+            <i class="fas fa-chart-area"></i> Maintenace Issues
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table id="datatablesSimple" class="table table-striped table-bordered">
+                <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th>Query #</th>
@@ -34,11 +34,24 @@
                         @foreach($issues as $issue)
                         <tr>
                             <td>
-                                {{ $issue['query_number'] }} 
+                                <strong>{{ $issue['query_number'] }}</strong>
                                 <a href="{{ route('query', ['id' => $issue['id']]) }}">Edit</a>
                             </td>
                             <td>{{ $issue['address'] }}</td>
-                            <td>{{ $issue['severity'] }}</td>
+                            <td>
+                                @php
+                                $severity = strtolower($issue['severity']);
+                                $badgeClass = '';
+                                if($severity === 'high') {
+                                    $badgeClass = 'danger'; // red
+                                } elseif($severity === 'medium') {
+                                    $badgeClass = 'warning'; // yellow
+                                } elseif($severity === 'low') {
+                                    $badgeClass = 'secondary'; // gray
+                                }
+                                @endphp
+                                <span class="badge badge-{{ $badgeClass }}" >{{ ucfirst($severity) }}</span>
+                            </td>
                             <td>{{ $issue['description'] }}</td>
                             <td>{{ $issue['date'] }}</td>
                             <td>{{ $issue['contact'] }}</td>
@@ -53,7 +66,7 @@
     <!-- Add Query Card -->
     <div class="card mb-4">
         <div class="card-header">
-            <i class="fa-solid fa-plus"></i> Add
+            <i class="fas fa-plus"></i> Add Query
         </div>
         <div class="card-body">
             <form action="{{ route('addQuery') }}" method="POST" enctype="multipart/form-data">

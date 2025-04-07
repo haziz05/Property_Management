@@ -7,14 +7,14 @@
 @stop
 
 @section('content')
-<div class="container-fluid px-4">
+<div class="container-fluid">
 
     <div class="row">
         <!-- Maintenance Issues Card -->
-        <div class="col-xl-6">
+        <div class="col-6">
             <div class="card mb-4">
                 <div class="card-header">
-                    <i class="fas fa-chart-area me-1"></i>
+                    <i class="fas fa-chart-area"></i>
                     <a href="{{ route('maintenance') }}">Maintenance Issues</a>
                 </div>
                 <div class="card-body">
@@ -56,10 +56,10 @@
         </div>
 
         <!-- Tenants Card -->
-        <div class="col-xl-6">
+        <div class="col-6">
             <div class="card mb-4">
                 <div class="card-header">
-                    <i class="fas fa-chart-bar me-1"></i>
+                    <i class="fas fa-user"></i>
                     <a href="{{ route('currentTenant') }}">Tenants</a>
                 </div>
                 <div class="card-body">
@@ -95,7 +95,7 @@
     <!-- Properties Card -->
     <div class="card mb-4">
         <div class="card-header">
-            <i class="fas fa-table me-1"></i>
+            <i class="fas fa-home"></i>
             <a href="{{ route('listings') }}">Properties</a>
         </div>
         <div class="card-body">

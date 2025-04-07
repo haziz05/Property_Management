@@ -18,7 +18,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-hover">
+                <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th>File Name</th>
@@ -34,7 +34,7 @@
                                     {{ $file['fileName'] }}
                                 </a>
                             </td>
-                            <td>{{ $file['address'] }}</td>
+                            <td>{{ $file['Address'] }}</td>
                             <td>{{ $file['date'] }}</td>
                         </tr>
                         @endforeach

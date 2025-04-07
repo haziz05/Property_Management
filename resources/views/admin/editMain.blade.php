@@ -15,7 +15,7 @@
     <!-- Card for Adding New Property -->
     <div class="card mb-4">
         <div class="card-header">
-            <i class="fa-solid fa-plus"></i> Add New Property
+            <i class="fas fa-plus"></i> Add Property
         </div>
         <div class="card-body">
             <form action="{{ route('addProperty') }}" method="POST" enctype="multipart/form-data">
@@ -61,7 +61,7 @@
     <!-- Card for Listing Existing Properties -->
     <div class="card">
         <div class="card-header">
-            <i class="fa-solid fa-edit"></i> Existing Properties
+            <i class="fas fa-home"></i> Existing Properties
         </div>
         <div class="card-body">
             <div class="row">
@@ -72,7 +72,7 @@
                                 <div class="row align-items-center">
                                     <!-- Property Info -->
                                     <div class="col-md-4">
-                                        <h4 class="text-primary">{{ $property['Address'] }}</h4>
+                                        <h4 class="text-primary"><a href="{{ route('editProperty', ['property_id' => $property['id']]) }}">{{ $property['Address'] }}</a></h4>
                                         <p class="mb-0 text-secondary">{{ $property['size'] }} sq ft</p>
                                     </div>
                                     <!-- Property Description -->
@@ -81,9 +81,7 @@
                                     </div>
                                     <!-- Action Buttons -->
                                     <div class="col-md-4 text-center">
-                                        <a href="{{ route('editProperty', ['property_id' => $property['id']]) }}" class="btn btn-primary mb-2">
-                                            Edit
-                                        </a>
+
                                         <a href="{{ route('removeProperty', ['property_id' => $property['id']]) }}" 
                                             class="btn btn-danger remove-property">
                                             Remove

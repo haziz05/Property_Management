@@ -26,7 +26,7 @@ class fileController extends Controller
 
         $request->validate([
             'inputName'=>'required|string',
-            'property'=>'required|integer',
+            'property'=>'required|string',
             'phone'=>'required|string',
             'email'=>'required|string',
             'date'=>'required|date',
@@ -66,7 +66,7 @@ class fileController extends Controller
         $request->validate([
             'queryNumber'=>'required|string',
             'inputName'=>'required|string',
-            'property'=>'required|integer',
+            'property'=>'required|string',
             'phone'=>'required|string',
             'email'=>'required|string',
             'date'=>'required|date',
@@ -104,7 +104,7 @@ class fileController extends Controller
     public static function uploadPropertyFile(Request $request) {
 
         $request->validate([
-            'property'=>'required|integer',
+            'property'=>'required|string',
             'date'=>'required|date',
             'file'=>'required|array',
             'file.*'=>'file|max:90000'

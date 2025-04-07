@@ -15,7 +15,7 @@
     <!-- Card for Adding New Tenant -->
     <div class="card mb-4">
         <div class="card-header">
-            <i class="fa-solid fa-plus"></i> Add Tenant
+            <i class="fas fa-plus"></i> Add Tenant
         </div>
         <div class="card-body">
             <form action="{{ route('addTenant') }}" method="POST" enctype="multipart/form-data">
@@ -86,7 +86,7 @@
     <!-- Card for Listing Existing Tenants -->
     <div class="card">
         <div class="card-header">
-            <i class="fa-solid fa-edit"></i> Existing Tenants
+            <i class="fas fa-user"></i> Existing Tenants
         </div>
         <div class="card-body">
             <div class="row">
