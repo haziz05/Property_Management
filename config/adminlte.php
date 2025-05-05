@@ -192,7 +192,7 @@ return [
     'classes_content_wrapper' => '',
     'classes_content_header' => '',
     'classes_content' => '',
-    'classes_sidebar' => 'sidebar-dark-purple elevation-4',
+    'classes_sidebar' => 'sidebar-dark-primary elevation-4',
     'classes_sidebar_nav' => '',
     'classes_topnav' => 'navbar-white navbar-light',
     'classes_topnav_nav' => 'navbar-expand',
@@ -253,7 +253,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => '/dashboard',
+    'dashboard_url' => '',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -294,74 +294,7 @@ return [
     |
     */
 
-    'menu' => [
-       
-        // Sidebar items:
-        [
-            'text' => 'Dashboard',
-            'url' => '/dashboard',
-            'icon' => 'fas fa-tablet-alt',
-        ],
-
-        [
-            'text'    => 'Properties',
-            'icon'    => 'fas fa-home',
-            'submenu' => [
-                [
-                    'text' => 'Listings',
-                    'url'  => 'listings', // or use route('listings')
-                ],
-                [
-                    'text' => 'Maintenance Issues',
-                    'url'  => 'maintenance', // or route('maintenance')
-                ],
-                [
-                    'text' => 'Edit Listing',
-                    'url'  => 'edit', // or route('editScreen')
-                ],
-            ],
-        ],
-
-        [
-        'text'    => 'Tenants',
-        'icon'    => 'fas fa-user',
-        'submenu' => [
-            [
-                'text' => 'Current Tenants',
-                'url'  => 'currentTenant', // or route('currentTenant')
-            ],
-            [
-                'text' => 'Edit Tenants',
-                'url'  => 'editTenant', // or route('editTScreen')
-            ],
-        ],
-        ],
-
-        [
-            'text'    => 'Upload Document',
-            'icon'    => 'fas fa-upload',
-            'submenu' => [
-                [
-                    'text' => 'Tenant',
-                    'url'  => 'showTenantUpload', // or route('showTenantUpload')
-                ],
-                [
-                    'text' => 'Maintenance',
-                    'url'  => 'showMaintenanceUpload', // or route('showMaintenanceUpload')
-                ],
-                [
-                    'text' => 'Property',
-                    'url'  => 'showPropertyUpload', // or route('showPropertyUpload')
-                ],
-            ],
-        ],
-        [
-            'text'    => 'Select Document',
-            'url'     => '/showSelect',
-            'icon'    => 'fas fa-file-alt',
-
-        ],
-    ],
+    'menu' => [/* Dynamically Created by MenuServiceProvider */],
 
     /*
     |--------------------------------------------------------------------------
