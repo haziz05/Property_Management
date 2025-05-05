@@ -72,7 +72,7 @@
                                 <div class="row align-items-center">
                                     <!-- Property Info -->
                                     <div class="col-md-4">
-                                        <h4 class="text-primary"><a href="{{ route('editProperty', ['property_id' => $property['id']]) }}">{{ $property['Address'] }}</a></h4>
+                                        <h4 class="text-primary">{{ $property['Address'] }}</h4>
                                         <p class="mb-0 text-secondary">{{ $property['size'] }} sq ft</p>
                                     </div>
                                     <!-- Property Description -->
@@ -82,9 +82,9 @@
                                     <!-- Action Buttons -->
                                     <div class="col-md-4 text-center">
 
-                                        <a href="{{ route('removeProperty', ['property_id' => $property['id']]) }}" 
-                                            class="btn btn-danger remove-property">
-                                            Remove
+                                        <a href="{{ route('editProperty', ['property_id' => $property['id']]) }}" 
+                                            class="btn btn-primary">
+                                            Edit
                                         </a>
                                     </div>
                                 </div>
@@ -98,30 +98,6 @@
 </div>
 @stop
 
-@section('js')
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.remove-property').forEach(function(button) {
-        button.addEventListener('click', function(e) {
-            e.preventDefault(); 
-            const url = this.getAttribute('href'); 
 
-            Swal.fire({
-                title: 'Are you sure you want to remove this property?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = url;
-                }
-            });
-        });
-    });
-});
-</script>
-@stop
 
 

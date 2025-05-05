@@ -18,23 +18,21 @@
             <label for="file-filter">Filter Files:</label>
             <select id="file-filter" name="filter" class="form-control" onchange="this.form.submit()">
                 <option value="all" {{ $filter === 'all' ? 'selected' : '' }}>Select Files to Display</option>
-                <option value="maintenance" {{ $filter === 'maintenance' ? 'selected' : '' }}>Maintenance</option>
-                <option value="property" {{ $filter === 'property' ? 'selected' : '' }}>Property</option>
-                <option value="tenant" {{ $filter === 'tenant' ? 'selected' : '' }}>Tenant</option>
+                <option value="maintenance" {{ $filter === 'maintenance' ? 'selected' : '' }}>Maintenance Files</option>
+                <option value="property" {{ $filter === 'property' ? 'selected' : '' }}>Property Files</option>
+                <option value="tenant" {{ $filter === 'tenant' ? 'selected' : '' }}>Tenant Files</option>
             </select>
         </div>
     </form>
 
     <div class="card mb-4">
-        <div class="card-header">
-            <i class="fas fa-file"></i> Select File
-        </div>
+ 
         
         <!-- Maintenance Files -->
         @if($filter === 'maintenance')
         <div class="card-body" id="maintenance-files">
             <div class="table-responsive">
-                <table class="table table-hover">
+                <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th>File Name</th>
@@ -70,7 +68,7 @@
         @if($filter === 'property')
         <div class="card-body" id="property-files">
             <div class="table-responsive">
-                <table class="table table-hover">
+                <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th>File Name</th>
@@ -86,7 +84,7 @@
                                     {{ $file['fileName'] }}
                                 </a>
                             </td>
-                            <td>{{ $file['address'] }}</td>
+                            <td>{{ $file['Address'] }}</td>
                             <td>{{ $file['date'] }}</td>
                         </tr>
                         @endforeach
@@ -100,7 +98,7 @@
         @if($filter === 'tenant')
         <div class="card-body" id="tenant-files">
             <div class="table-responsive">
-                <table class="table table-hover">
+                <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th>File Name</th>

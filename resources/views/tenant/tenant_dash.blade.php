@@ -1,14 +1,16 @@
-<!DOCTYPE html>
+@extends('adminlte::page')
 
-@include('header')    
+@section('title', 'Dashboard')
 
-@include('layouts.topNav')
+@section('content_header')  
+    <h1>Tenant Dashboard</h1>
+@stop
+
+@section('content')
 <div id="layoutSidenav">
-    @include('layouts.sideNavT')
 
     <!------------------------------------------ Dashboard Screen ----------------------------------------->
     <div id="layoutSidenav_content">
-        @section('content')
         <main>
             <div class="container-fluid px-4">
                 <h1 class="mt-4">Dashboard</h1>
@@ -18,8 +20,9 @@
             
             </div>
         </main>
-        @include('footer')
+    
     </div>
 </div>
+@stop
 
 
