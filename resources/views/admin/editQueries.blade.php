@@ -11,14 +11,15 @@
     </ol>
 @stop
 
+<!-- Update Query Card -->
 @section('content')
-<div class="container-fluid px-4">
+<div class="container-fluid">
     <div class="card mb-4">
         <div class="card-header">
-            <i class="fas fa-chart-area"></i> Update Query
+            <i class="fas fa-pen"></i> Update Query
         </div>
         <div class="card-body">
-            <form action="{{ route('updateQuery') }}" method="POST">
+            <form action="{{ route('updateQuery') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="id" value="{{ $query['id'] }}">
 
@@ -86,26 +87,26 @@
 
 @section('js')
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.remove-property').forEach(function(button) {
-        button.addEventListener('click', function(e) {
-            e.preventDefault(); 
-            const url = this.getAttribute('href'); 
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.remove-property').forEach(function(button) {
+            button.addEventListener('click', function(e) {
+                e.preventDefault(); 
+                const url = this.getAttribute('href'); 
 
-            Swal.fire({
-                title: 'Are you sure you want to delete this query?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = url;
-                }
+                Swal.fire({
+                    title: 'Are you sure you want to delete this query?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = url;
+                    }
+                });
             });
         });
     });
-});
 </script>
 @stop

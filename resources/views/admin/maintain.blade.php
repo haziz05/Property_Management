@@ -5,7 +5,7 @@
 @section('content_header')
     <h1>Maintenance</h1>
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('admin_dash') }}">Dashboard</a></li>
         <li class="breadcrumb-item active">Maintenance</li>
     </ol>
 @stop

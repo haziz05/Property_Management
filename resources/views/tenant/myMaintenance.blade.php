@@ -4,23 +4,25 @@
 
 @section('content_header')
     <h1>My Maintenace</h1>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ route('tenant_dash') }}">My Dashboard</a></li>
+        <li class="breadcrumb-item active">My Maintenance</li>
+    </ol>
 @stop
 
 
 @section('content')
 <div class="container-fluid">
-    <!-- Queries Card -->
-    <div class="container-fluid">
-        <h1 class="mt-4">Maintenance Queries</h1><br><br>
-        
 
-        <div class="card mb-4">
-            <div class="card-header">
-                <i class="fa-solid fa-exclamation"></i>
-                Queries
-            </div>
-            <div class="card-body">
-                <table id="datatablesSimple">
+    <!-- Queries Card -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-chart-area"></i>
+            Maintenance Issues
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th>Query #</th>
@@ -35,31 +37,49 @@
                     <tbody>
                         @foreach($myQueries as $query)
                         <tr>
-                            <th>{{$query['query_number']}} <a href="{{ route('tenantQueries', ['id' => $query['id']]) }}">Edit</a></th>
-                            <th>{{$query['address']}}</th>
-                            <th>{{$query['severity']}}</th>
-                            <th>{{$query['description']}}</th>
-                            <th>{{$query['date']}}</th>
-                            <th>{{$query['contact']}}</th>
+                            <td>
+                                <strong>{{$query['query_number']}}</strong>
+                                <a href="{{ route('tenantQueries', ['id' => $query['id']]) }}">Edit</a>
+                            </td>
+                            <td>{{$query['address']}}</td>
+                            <td>
+                                @php
+                                $severity = strtolower($query['severity']);
+                                $badgeClass = '';
+                                if($severity === 'high'){
+                                    $badgeClass = 'danger'; //red
+                                } elseif($severity === 'medium'){
+                                    $badgeClass = 'warning'; //yellow
+                                } elseif($severity === 'low') {
+                                    $badgeClass = 'secondary'; //gray
+                                }
+                                @endphp
+                                <span class="badge badge-{{ $badgeClass }}">{{ ucfirst($severity) }}</span>
+                            </td>
+                            <td>{{$query['description']}}</td>
+                            <td>{{$query['date']}}</td>
+                            <td>{{$query['contact']}}</td>
 
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
-            </div> 
-        </div>
+            </div>
+        </div> 
+    </div>
 
-        <div class="card mb-4">
+    <!-- Adding Query Card -->
+    <div class="card mb-4">
             <div class="card-header">
-                <i class="fa-solid fa-plus"></i>
-                Add
+                <i class="fas fa-plus"></i>
+                Add Query
             </div>
 
             <div class="card-body">
-                <!--Adding Form-->
                 <form action="{{ route('addTQueries')}}" method="POST" enctype="multipart/form-data">
                     @csrf
-
+                    
+                    <!-- Turn this into a select -->
                     <div class="mb-3 row">
                         <label for="address" class="col-sm-2 col-form-label">Address</label>
                         <div class="col-sm-10">
@@ -120,15 +140,7 @@
 
 
                 </form>
-                <!--Adding Form-->
             </div>
-            
-            
         </div>
-
-
-        
-    </div>
-
 </div>
 @stop
