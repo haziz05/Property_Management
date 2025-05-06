@@ -83,7 +83,11 @@
                     <div class="mb-3 row">
                         <label for="address" class="col-sm-2 col-form-label">Address</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="address" name="address" value="{{$property['Address']}}">
+                            <select class="form-control" id="address" name="address" aria-placeholder="Please select a property">
+                                @foreach($properties as $property)
+                                    <option value="{{ $property['Address'] }}">{{ $property['Address']}}</option>
+                                @endforeach
+                            </select>
                             @error('address')
                                 <span class="text-danger">{{$message}}</span>
                             @enderror
@@ -125,9 +129,9 @@
                     </div>
 
                     <div class="mb-3 row">
-                        <label for="inputName" class="col-sm-2 col-form-label">Phone or Email</label>
+                        <label for="inputName" class="col-sm-2 col-form-label">Email</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="contact" name="contact" placeholder="Phone or Email">
+                            <input type="text" class="form-control" id="contact" name="contact" placeholder="Email">
                             @error('contact')
                                 <span class="text-danger">{{$message}}</span>
                             @enderror

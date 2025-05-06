@@ -11,33 +11,16 @@ use Illuminate\Support\Facades\Auth;
 class myMaintenanceController extends Controller
 {
     function show() {
-        $user_name = Auth::user()->name;
-        $user_email = Auth::user()->email;
-        $tenant = Tenant::all();
+        $user = Auth::user();
+        $user_name = $user->name;
+        $user_email = $user->email;
 
-        $id = "";
+        $tenants = Tenant::where('email', $user_email)->get(); //Gets the first tenant record that matches teh user's email
+        $propertyIds = $tenants->pluck('property_id')->unique(); //Gets the tenant properties IDs
+        $properties = Property::whereIn('id', $propertyIds)->get(); //Gets the actual properties
+        $myQueries = Issue::where('contact', $user_email)->get();//Get issues where contact mathces logged-in user's eamil
 
-        $tenant->each(function($tenant) use($user_email, &$id){
-            if($tenant->email == $user_email){
-                $id = $tenant->property_id;
-            }
-        });
-
-        $property = property::find($id);
-        $person = Tenant::find($id);
-
-        $queries = issue::all();
-        $myQueries = [];
-
-        $queries->each(function($query) use($property, &$myQueries){
-            if($query->address == $property->Address){
-                $myQueries[] = $query;
-            }
-        });
-
-
-
-        return view('tenant.myMaintenance', compact('user_name', 'property', 'person', 'myQueries'));
+        return view('tenant.myMaintenance', compact('user_name', 'properties', 'myQueries'));
     }
 
     public static function showQuery($id){

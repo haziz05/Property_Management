@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\issue;
 use App\Models\Tenant;
 use App\Models\property;
 use Illuminate\Http\Request;
@@ -12,20 +13,14 @@ class dashControllerT extends Controller
     function show() {
         $user_name = Auth::user()->name;
         $user_email = Auth::user()->email;
-        $tenant = Tenant::all();
 
-        $id = "";
+        
+        $tenant = Tenant::where('email', $user_email)->get(); //All tenants are filtered by email
+        $propertiesID = $tenant->pluck('property_id')->toArray(); //Gets matching property IDs
+        $properties = Property::whereIn('id', $propertiesID)->get(); //Gets properties that mathc the IDs
+        $myQueries = Issue::where('contact', $user_email)->get();
 
-        $tenant->each(function($tenant) use($user_email, &$id){
-            if($tenant->email == $user_email){
-                $id = $tenant->property_id;
-            }
-        });
-
-        $property = property::find($id);
-        $person = Tenant::find($id);
-
-        return view('tenant.tenant_dash', compact('user_name', 'property', 'person'));
+        return view('tenant.tenant_dash', compact('user_name', 'properties', 'myQueries'));
     }
 }
 

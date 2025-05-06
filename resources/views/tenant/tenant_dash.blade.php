@@ -10,6 +10,7 @@
 <div class="container-fluid">
     <!--My Properties Card -->
     <div class="card mb-4">
+        @foreach($properties as $property)
         <div class="card-header">
             <i class="fas fa-home"></i>
             My Properties
@@ -23,7 +24,7 @@
 
                 <div class="col-md-4">
                     <h5>{{$property['Address']}}</h5>
-                    <h5>Leasing: {{$person['area']}} sq ft</h5>
+                    <h5>Lease payment:</h5>
                     <h5>Description: {{$property['description']}}</h5>
                 </div>
 
@@ -32,6 +33,7 @@
                 </div>
             </div>
         </div>
+        @endforeach
     </div>
 
     <div class="row">
@@ -58,6 +60,40 @@
                     </div>
 
                     <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Address</th>
+                                        <th>Level of Issue</th>
+                                        <th>Description</th>
+                                        <!-- <th>Progress</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($myQueries as $query)
+                                    <tr>
+                                        <td><strong>{{ $query['address'] }}</strong></td>
+                                        <td>
+                                            @php
+                                            $severity = strtolower($query['severity']);
+                                            $badgeClass = '';
+                                            if($severity === 'high'){
+                                                $badgeClass = 'danger'; //red
+                                            } elseif($severity === 'medium'){
+                                                $badgeClass = 'warning'; //yellow
+                                            } elseif($severity === 'low') {
+                                                $badgeClass = 'secondary'; //gray
+                                            }
+                                            @endphp
+                                            <span class="badge badge-{{ $badgeClass }}">{{ ucfirst($severity) }}</span>
+                                        </td>
+                                        <td>{{ $query['description'] }}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
 
                     </div>
                 </div>
