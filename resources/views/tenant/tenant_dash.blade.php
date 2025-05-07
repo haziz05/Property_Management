@@ -10,24 +10,27 @@
 <div class="container-fluid">
     <!--My Properties Card -->
     <div class="card mb-4">
-        @foreach($properties as $property)
-        <div class="card-header">
-            <i class="fas fa-home"></i>
-            My Properties
+        <div class="card-header d-flex align-items-center" >
+            <div class="flex-grow-1">
+                <i class="fas fa-home"></i>
+                My Properties
+            </div>
+            <div>
+                <button class="btn btn-outline-secondary btn-sm me-1" id="prevProperty"><i class="fas fa-chevron-left"></i></button>
+                <button class="btn btn-outline-secondary btn-sm" id="nextProperty"><i class="fas fa-chevron-right"></i></button>
+            </div>
         </div>
-
-        <div class="card-body">
+        @foreach($properties as $index => $property)
+        <div class="card-body property-item" @if($index !== 0) style="display: none;" @endif>
             <div class="row align-items-center">
                 <div class="col-md-4">
-                    <img src="" alt="Property Image" class="img-fluid">
+                    <img src="{{ $property['image_url'] ?? 'https://via.placeholder.com/300x200?text=No+Image' }}" alt="Property Image" class="img-fluid">
                 </div>
-
                 <div class="col-md-4">
-                    <h5>{{$property['Address']}}</h5>
-                    <h5>Lease payment:</h5>
-                    <h5>Description: {{$property['description']}}</h5>
+                    <h5>{{ $property['Address'] }}</h5>
+                    <h5>Lease Payment:</h5>
+                    <h5>Description: {{ $property['description'] }}</h5>
                 </div>
-
                 <div class="col-md-4">
                     <h5 class="btn btn-primary">Contact a Manager</h5>
                 </div>
@@ -42,7 +45,7 @@
             <div class="card mb-4">
                 <div class="card-header">
                     <i class="fas fa-money-bill"></i>
-                    <a href="">My Lease</a>
+                    <a href="{{ route('myLease') }}">My Lease</a>
                 </div>
 
                 <div class="card-body">
@@ -102,4 +105,25 @@
 </div>
 @stop
 
+@section('js')
+<script>
+    let currentIndex = 0;
+    const propertyItems = document.querySelectorAll('.property-item');
 
+    function showProperty(index) {
+        propertyItems.forEach((item, i) => {
+            item.style.display = i === index ? 'block' : 'none';
+        });
+    }
+
+    document.getElementById('nextProperty').addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % propertyItems.length;
+        showProperty(currentIndex);
+    });
+
+    document.getElementById('prevProperty').addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + propertyItems.length) % propertyItems.length;
+        showProperty(currentIndex);
+    });
+</script>
+@stop

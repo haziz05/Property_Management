@@ -102,7 +102,7 @@ class MenuServiceProvider extends ServiceProvider
 
                         [
                             'text' => 'My Lease',
-                            'url' => '',
+                            'url' => '/my-lease',
                             'icon' => 'fas fa-money-bill'
                         ],
 

@@ -14,6 +14,7 @@ use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\managementController;
 use App\Http\Controllers\myPropertyController;
 use App\Http\Controllers\maintenanceController;
+use App\Http\Controllers\myLeaseController;
 use App\Http\Controllers\myMaintenanceController;
 
 Route::get('/', function () {
@@ -76,7 +77,8 @@ Route::get('/viewMaintenanceFiles/{id}', [fileController::class, 'viewMaintenanc
 Route::get('/showPropertySelect', [fileController::class, 'showPropertySelect'])->name('showPropertySelect');
 Route::get('/viewPropertyFiles/{id}', [fileController::class, 'viewPropertyFiles'])->name('viewPropertyFiles');
 
-
+// Tenant Lease Route
+Route::get('/my-lease', [myLeaseController::class, 'show'])->name('myLease');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
