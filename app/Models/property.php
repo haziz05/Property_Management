@@ -9,4 +9,9 @@ class property extends Model
 {
     use HasFactory;
     public $timestamps=false;
+
+    protected $fillable = [
+        'image_path',
+        'image_original_name',
+    ];
 }

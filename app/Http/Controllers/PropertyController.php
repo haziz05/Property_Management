@@ -8,6 +8,7 @@ use Hamcrest\Type\IsInteger;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use phpDocumentor\Reflection\Types\Null_;
+use Illuminate\Support\Facades\Storage;
 
 class PropertyController extends Controller
 {
@@ -29,7 +30,8 @@ class PropertyController extends Controller
         $request->validate([
             'address'=>'required|string',
             'size'=>'required|string',
-            'description'=>'required|string'
+            'description'=>'required|string',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
         ]);
 
 
@@ -37,6 +39,11 @@ class PropertyController extends Controller
         $property->Address = request('address');
         $property->size = request('size');
         $property->description = request('description');
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('property_images', 'public');
+            $property->image_path = $path;
+            $property->image_original_name = $request->file('image')->getClientOriginalName();
+        }
         $property->save();
         return redirect('/edit');
 
@@ -59,14 +66,22 @@ class PropertyController extends Controller
         $request->validate([
             'Address'=>'required|string',
             'Size'=>'required|string',
-            'Description'=>'required|string'
+            'Description'=>'required|string',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
         ]);
 
         $property = property::find($request->id);
-        $property->id=$request->id;
         $property->Address=$request->Address;
         $property->size=$request->Size;
         $property->description=$request->Description;
+        if ($request->hasFile('image')) {
+            if ($property->image_path) {
+                Storage::disk('public')->delete($property->image_path);
+            }
+            $path = $request->file('image')->store('property_images', 'public');
+            $property->image_path = $path;
+            $property->image_original_name = $request->file('image')->getClientOriginalName();
+        }
         $property->save();
         return redirect('/edit');
 

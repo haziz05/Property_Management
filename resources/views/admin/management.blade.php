@@ -16,7 +16,15 @@
         <div class="col-6">
             <div class="card mb-4">
                 <div class="card-body">
-                    <img src="" alt="Property Image" class="img-fluid">
+                    @if($property->image_path)
+                        <img src="{{ Storage::url($property->image_path) }}"
+                             alt="{{ $property->image_original_name }}"
+                             class="img-fluid">
+                    @else
+                        <img src="/images/placeholder.png"
+                             alt="No image available"
+                             class="img-fluid">
+                    @endif
                 </div>
             </div>
         </div>
@@ -46,7 +54,9 @@
                 @foreach($occupied_tenants as $tenant)
                 <div class="card-body">
                     <a href="{{route('currentTenant') }}">{{ $tenant['name']}}</a><br>
-                    Occupies: {{ $tenant['area'] }} sq ft
+                    Occupies: {{ $tenant['area'] }} sq ft <br>
+                    Phone: {{ $tenant['phone'] }} <br>
+                    Email: {{ $tenant['email'] }}
                 </div>
                 @endforeach
             </div>
@@ -55,11 +65,10 @@
         <div class="col-6">
             <div class="card mb-4">
                 <div class="card-header">
-                    <i class="fas fa-money"></i> Payment Information
+                    <i class="fas fa-brush"></i> Maintenance
                 </div>
                 <div class="card-body">
-                    Place holder<br>
-                    for payment Information<br>
+                    
                 </div>
             </div>
         </div>

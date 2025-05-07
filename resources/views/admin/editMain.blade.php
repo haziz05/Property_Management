@@ -51,6 +51,20 @@
                     </div>
                 </div>
 
+                <div class="mb-3 row">
+                    <label for="image" class="col-sm-2 col-form-label">Property Image</label>
+                    <div class="col-sm-10">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="image" name="image">
+                            <label class="custom-file-label" for="file">Choose file</label>
+                        </div>
+                        
+                        @error('image')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+
                 <div class="text-end">
                     <button type="submit" class="btn btn-primary">Add Property</button>
                 </div>
