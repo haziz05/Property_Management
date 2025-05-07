@@ -13,8 +13,9 @@ class dashController extends Controller
     function show() {
         $user_name = Auth::user()->name;
         $properties = property::all();
-        $people = Tenant::all();
         $issues = issue::all();
+
+        $people = Tenant::all()->unique('email')->values();
         return view('admin.admin_dash', compact('user_name', 'properties', 'people', 'issues'));
     }
 }

@@ -13,25 +13,25 @@
 @section('content')
 <div class="container-fluid">
     <div class="row">
-        @foreach($persons as $person)
+        @for ($i = 0; $i < count($persons); $i++)
         <div class="col-12 mb-3">
             <div class="card shadow-sm">
                 <div class="card-body">
                     <div class="row align-items-center">
                         <!-- Tenant Name -->
                         <div class="col-md-4">
-                            <h4 class="text-primary">{{ $person['name'] }}</h4>
+                            <h4 class="text-primary">{{ $persons[$i]['name'] }}</h4>
                         </div>
                         <!-- Tenant Details -->
                         <div class="col-md-4">
                             <ul class="list-unstyled mb-0">
-                                <li><strong>Phone:</strong> {{ $person['phone'] }}</li>
-                                <li><strong>Email:</strong> {{ $person['email'] }}</li>
+                                <li><strong>Address:</strong> {{ $properties[$i]['Address'] }}</li>
+                                <li><strong>Email:</strong> {{ $persons[$i]['email'] }}</li>
                             </ul>
                         </div>
                         <!-- Action Button -->
                         <div class="col-md-4 text-center">
-                            <a href="{{ route('removeTenant', ['tenant_id' => $person['id']]) }}" 
+                            <a href="{{ route('removeTenant', ['tenant_id' => $persons[$i]['id']]) }}" 
                                 class="btn btn-danger remove-property">
                                 Remove
                             </a>
@@ -40,7 +40,7 @@
                 </div>
             </div>
         </div>
-        @endforeach
+        @endfor
     </div>
 </div>
 @stop
@@ -70,4 +70,3 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 @stop
-

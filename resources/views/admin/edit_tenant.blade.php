@@ -33,9 +33,14 @@
                 </div>
 
                 <div class="mb-3 row">
-                    <label for="property_id" class="col-sm-2 col-form-label">Property ID</label>
+                    <label for="property_id" class="col-sm-2 col-form-label">Property</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="property_id" name="property_id" value="{{ $person['property_id'] }}">
+                        <select class="form-control" id="property_id" name="property_id">
+                            <option value="{{ $curr_property['id'] }}">{{ $curr_property['Address'] }}</option>
+                            @foreach($properties as $property)
+                            <option value="{{ $property['id'] }}">{{ $property['Address'] }}</option>
+                            @endforeach
+                        </select>
                         @error('property_id')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror

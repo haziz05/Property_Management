@@ -90,23 +90,24 @@
         </div>
         <div class="card-body">
             <div class="row">
-                @foreach($persons as $person)
+                @for ($i = 0; $i < count($persons); $i++)
                     <div class="col-12 mb-3">
                         <div class="card shadow-sm">
                             <div class="card-body">
                                 <div class="row align-items-center">
                                     <!-- Tenant Name -->
                                     <div class="col-12 col-md-4">
-                                        <h4 class="text-primary">{{ $person['name'] }}</h4>
+                                        <h4 class="text-primary">{{ $persons[$i]['name'] }}</h4>
                                     </div>
-                                    <!-- Action Buttons -->
+                                    <!-- Property Address -->
                                     <div class="col-12 col-md-4 text-center">
                                         <div class="col-md-4">
-                                            <p>{{ $person['email'] }}</p>
+                                            <p>{{ $properties[$i]['Address'] ?? 'N/A' }}</p>
                                         </div>
                                     </div>
+                                    <!-- Action Button -->
                                     <div class="col-12 col-md-4 text-center">
-                                        <a href="{{ route('editTenant', ['tenant_id' => $person['id']]) }}" class="btn btn-primary mb-2">
+                                        <a href="{{ route('editTenant', ['tenant_id' => $persons[$i]['id']]) }}" class="btn btn-primary mb-2">
                                             Edit
                                         </a>
                                     </div>
@@ -114,7 +115,7 @@
                             </div>
                         </div>
                     </div>
-                @endforeach
+                @endfor
             </div>
         </div>
     </div>

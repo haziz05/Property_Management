@@ -18,7 +18,7 @@ class dashControllerT extends Controller
         $tenant = Tenant::where('email', $user_email)->get(); //All tenants are filtered by email
         $propertiesID = $tenant->pluck('property_id')->toArray(); //Gets matching property IDs
         $properties = Property::whereIn('id', $propertiesID)->get(); //Gets properties that mathc the IDs
-        $myQueries = Issue::where('contact', $user_email)->get();
+        $myQueries = Issue::where('contact', $user_email)->get();//Gets the queries for that user and all of their properties
 
         return view('tenant.tenant_dash', compact('user_name', 'properties', 'myQueries'));
     }

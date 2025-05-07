@@ -64,6 +64,9 @@ return [
     */
 
     'logo' => '<b>Property</b>Manager',
+    'logo_img' => 'assets/img/house-icon.png',
+    'logo_img_class' => 'brand-image img-circle elevation-3',
+    'use_logo_img' => true,
 
 
     /*

@@ -10,17 +10,28 @@ use Illuminate\Support\Facades\Auth;
 class TenantController extends Controller
 {
     function show() {
-        $properties = property::all();
+
         $persons = Tenant::all();
-        return view('admin.current_tenant', compact( 'properties', 'persons'));
+        $propertyID = $persons->pluck('property_id')->toArray(); // Get property IDs
+        $propertyMap = Property::whereIn('id', $propertyID)->get()->keyBy('id'); // Map properties by ID
+
+        $properties = $persons->map(function ($person) use ($propertyMap) {
+            return $propertyMap[$person->property_id] ?? null;
+        });
+
+        return view('admin.current_tenant', compact('properties', 'persons'));
     }
 
     public static function showTenant(){
-        $user_name = Auth::user()->name;
-        $properties = property::all();
         $persons = Tenant::all();
+        $propertyID = $persons->pluck('property_id')->toArray(); // Get property IDs
+        $propertyMap = Property::whereIn('id', $propertyID)->get()->keyBy('id'); // Map properties by ID
+
+        $properties = $persons->map(function ($person) use ($propertyMap) {
+            return $propertyMap[$person->property_id] ?? null;
+        });
         
-        return view('admin.edit_tenant_main', compact('user_name', 'persons', 'properties'));
+        return view('admin.edit_tenant_main', compact( 'persons', 'properties'));
     }
 
     public static function addTenant(Request $request){
@@ -61,7 +72,10 @@ class TenantController extends Controller
     function editTenant($tenant_id){
         $user_name = Auth::user()->name;
         $person = Tenant::find($tenant_id);
-        return view('admin.edit_tenant', compact('user_name', 'person'));
+        $curr_property = Property::find($person->property_id);
+        $properties = Property::where('id', '!=', $person->property_id)->get();
+
+        return view('admin.edit_tenant', compact( 'person', 'curr_property', 'properties'));
     }
 
     function update(Request $request){
