@@ -26,9 +26,11 @@ class myMaintenanceController extends Controller
     public static function showQuery($id){
         $user_name = Auth::user()->name;
         $query = issue::find($id);
+        $curr_property = Property::where('Address', $query->address)->first();
+        $properties = Property::where('Address', '!=', $query->address)->get();
 
         
-        return view('tenant.myEditQueries', compact('user_name', 'query'));
+        return view('tenant.myEditQueries', compact('query', 'curr_property', 'properties'));
     }
 
     function add(Request $request){

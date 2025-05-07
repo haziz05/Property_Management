@@ -70,7 +70,7 @@
                                         <th>Address</th>
                                         <th>Level of Issue</th>
                                         <th>Description</th>
-                                        <!-- <th>Progress</th> -->
+                                        <th>Progress</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -92,6 +92,18 @@
                                             <span class="badge badge-{{ $badgeClass }}">{{ ucfirst($severity) }}</span>
                                         </td>
                                         <td>{{ $query['description'] }}</td>
+                                        <td>
+                                            @php
+                                            $progress = strtolower($query['progress']);
+                                            $progressClass = match ($progress) {
+                                                'not started' => 'secondary',  // gray
+                                                'in-progress' => 'primary',   // blue
+                                                'completed' => 'success',     // green
+                                                default => 'light',
+                                            };
+                                            @endphp
+                                            <span class="badge badge-{{ $progressClass }}">{{ ucfirst($progress) }}</span>
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>

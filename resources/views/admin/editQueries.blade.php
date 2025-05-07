@@ -26,7 +26,12 @@
                 <div class="mb-3 row">
                     <label for="address" class="col-sm-2 col-form-label">Address</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="address" name="address" value="{{ $query['address'] }}">
+                        <select class="form-control" id="address" name="address">
+                            <option value="{{ $curr_property['Address'] }}">{{ $curr_property['Address'] }}</option>
+                            @foreach($properties as $property)
+                            <option value="{{ $property['Address'] }}">{{ $property['Address'] }}</option>
+                            @endforeach
+                        </select>
                         @error('address')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -36,7 +41,21 @@
                 <div class="mb-3 row">
                     <label for="severity" class="col-sm-2 col-form-label">Severity</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="severity" name="severity" value="{{ $query['severity'] }}">
+                        <select class="form-control" id="severity" name="severity">
+                            <option selected value="{{ $query['severity'] }}">{{ $query['severity'] }}</option>
+                            @if($query['severity'] !== 'High')
+                                <option value="High">High</option>
+                            @endif
+                            @if($query['severity'] !== 'Medium')
+                                <option value="Medium">Medium</option>
+                            @endif
+                            @if($query['severity'] !== 'Low')
+                                <option value="Low">Low</option>
+                            @endif
+                        </select>
+                        @error('severity')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
                             
@@ -49,7 +68,18 @@
                         @enderror
                     </div>
                 </div>
-                            
+
+                <div class="mb-3 row">
+                    <label for="progress" class="col-sm-2 col-form-label">Progress</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" id="progress" name="progress">
+                            <option value="Not Started" {{ $query['progress'] == 'Not Started' ? 'selected' : '' }}>Not Started</option>
+                            <option value="In-Progress" {{ $query['progress'] == 'In-Progress' ? 'selected' : '' }}>In-Progress</option>
+                            <option value="Completed" {{ $query['progress'] == 'Completed' ? 'selected' : '' }}>Completed</option>
+                        </select>
+                    </div>
+                </div>      
+
                 <div class="mb-3 row">
                     <label for="date" class="col-sm-2 col-form-label">Date</label>
                     <div class="col-sm-10">
@@ -69,6 +99,8 @@
                         @enderror
                     </div>
                 </div>
+
+                
                             
                 <div class="text-end">
                     <button type="submit" class="btn btn-primary">Update</button>

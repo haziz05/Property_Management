@@ -25,22 +25,20 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>Query #</th>
+                            <th>#</th>
                             <th>Address</th>
                             <th>Severity of Issue</th>
                             <th>Description</th>
+                            <th>Progress</th>
                             <th>Date</th>
-                            <th>Preferred Form of Contact</th>
+                            <th>Email</th>
 
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($myQueries as $query)
                         <tr>
-                            <td>
-                                <strong>{{$query['query_number']}}</strong>
-                                <a href="{{ route('tenantQueries', ['id' => $query['id']]) }}">Edit</a>
-                            </td>
+                            <td><a href="{{ route('tenantQueries', ['id' => $query['id']]) }}">{{ $loop->iteration }}</a></td>
                             <td>{{$query['address']}}</td>
                             <td>
                                 @php
@@ -57,6 +55,18 @@
                                 <span class="badge badge-{{ $badgeClass }}">{{ ucfirst($severity) }}</span>
                             </td>
                             <td>{{$query['description']}}</td>
+                            <td>
+                                @php
+                                $progress = strtolower($query['progress']);
+                                $progressClass = match ($progress) {
+                                    'not started' => 'secondary',  // gray
+                                    'in-progress' => 'primary',   // blue
+                                    'completed' => 'success',     // green
+                                    default => 'light',
+                                };
+                                @endphp
+                                <span class="badge badge-{{ $progressClass }}">{{ ucfirst($progress) }}</span>
+                            </td>
                             <td>{{$query['date']}}</td>
                             <td>{{$query['contact']}}</td>
 

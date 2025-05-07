@@ -22,20 +22,20 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>Query #</th>
+                            <th>#</th>
                             <th>Address</th>
                             <th>Severity of Issue</th>
                             <th>Description</th>
+                            <th>Progress</th>
                             <th>Date</th>
-                            <th>Preferred Form of Contact</th>
+                            <th>Email</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($issues as $issue)
                         <tr>
                             <td>
-                                <strong>{{ $issue['query_number'] }}</strong>
-                                <a href="{{ route('query', ['id' => $issue['id']]) }}">Edit</a>
+                                <a href="{{ route('query', ['id' => $issue['id']]) }}">{{ $loop->iteration }}</a>
                             </td>
                             <td>{{ $issue['address'] }}</td>
                             <td>
@@ -53,6 +53,18 @@
                                 <span class="badge badge-{{ $badgeClass }}" >{{ ucfirst($severity) }}</span>
                             </td>
                             <td>{{ $issue['description'] }}</td>
+                            <td>
+                                @php
+                                $progress = strtolower($issue['progress']);
+                                $progressClass = match ($progress) {
+                                    'not started' => 'secondary',  // gray
+                                    'in-progress' => 'primary',   // blue
+                                    'completed' => 'success',     // green
+                                    default => 'light',
+                                };
+                                @endphp
+                                <span class="badge badge-{{ $progressClass }}">{{ ucfirst($progress) }}</span>
+                            </td>
                             <td>{{ $issue['date'] }}</td>
                             <td>{{ $issue['contact'] }}</td>
                         </tr>
@@ -75,7 +87,12 @@
                 <div class="mb-3 row">
                     <label for="address" class="col-sm-2 col-form-label">Address</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="address" name="address" placeholder="Enter Property Address">
+                        <select class="form-control" id="address" name="address">
+                            <option value="" selected disabled hidden>No Property</option>
+                            @foreach($properties as $property)
+                                <option value="{{ $property['Address'] }}">{{ $property['Address'] }}</option>
+                            @endforeach
+                        </select>
                         @error('address')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror

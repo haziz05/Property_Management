@@ -6,9 +6,9 @@
 @section('content_header')
     <h1>Eidt Query</h1>
     <ol class="breadcrumb">
-        <li class="breadcurmb-item"><a href="{{ route('tenant_dash') }}">My Dashboard</a></li>
-        <li class="breadcurmb-item"><a href="{{ route('tenantQueryScreen') }}">My Maintenace</a></li>
-        <li class="breadcurmb-item active">Edit Query</li>
+        <li class="breadcrumb-item"><a href="{{ route('tenant_dash') }}">My Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('tenantQueryScreen') }}">My Maintenace</a></li>
+        <li class="breadcrumb-item active">Edit Query</li>
     </ol>
 @stop
 
@@ -34,9 +34,14 @@
                 <div class="mb-3 row">
                     <label for="address" class="col-sm-2 col-form-label">Address</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="address" name="address"  value="{{$query['address']}}">
+                        <select class="form-control" id="address" name="address">
+                            <option value="{{ $curr_property['Address'] }}">{{ $curr_property['Address'] }}</option>
+                            @foreach($properties as $property)
+                            <option value="{{ $property['Address'] }}">{{ $property['Address'] }}</option>
+                            @endforeach
+                        </select>
                         @error('address')
-                            <span class="text-danger">{{$message}}</span>
+                            <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
                 </div>
@@ -44,9 +49,20 @@
                 <div class="mb-3 row">
                     <label for="severity" class="col-sm-2 col-form-label">Severity</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="severity" name="severity" value="{{$query['severity']}}">
+                        <select class="form-control" id="severity" name="severity">
+                            <option selected value="{{ $query['severity'] }}">{{ $query['severity'] }}</option>
+                            @if($query['severity'] !== 'High')
+                                <option value="High">High</option>
+                            @endif
+                            @if($query['severity'] !== 'Medium')
+                                <option value="Medium">Medium</option>
+                            @endif
+                            @if($query['severity'] !== 'Low')
+                                <option value="Low">Low</option>
+                            @endif
+                        </select>
                         @error('severity')
-                            <span class="text-danger">{{$message}}</span>
+                            <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
                 </div>

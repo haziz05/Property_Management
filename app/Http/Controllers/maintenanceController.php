@@ -5,17 +5,22 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\issue;
+use App\Models\property;
 
 class maintenanceController extends Controller
 {
     public static function show(){
         $issues = issue::all();
-        return view('admin.maintain', compact( 'issues'));
+        $properties = property::all();
+        return view('admin.maintain', compact( 'issues', 'properties'));
     }
 
     public static function showQuery($id){
+        $user_name = Auth::user()->name;
         $query = issue::find($id);
-        return view('admin.editQueries', compact( 'query'));
+        $curr_property = Property::where('Address', $query->address)->first();
+        $properties = Property::where('Address', '!=', $query->address)->get();
+        return view('admin.editQueries', compact( 'query', 'curr_property', 'properties'));
     }
 
     function update(Request $request){
@@ -34,6 +39,7 @@ class maintenanceController extends Controller
         $issue->description=$request->description;
         $issue->date=$request->date;
         $issue->contact=$request->contact;
+        $issue->progress = $request->progress;
         $issue->save();
         return redirect('/maintenance');
     }
@@ -41,14 +47,6 @@ class maintenanceController extends Controller
     function remove($id){
         $data = issue::find($id);
         $data->delete();
-
-        $issues = issue::orderBy('query_number')->get();
-
-        $count = 1;
-        foreach ($issues as $issue){
-            $issue->query_number = $count++;
-            $issue->save();
-        }
 
         return redirect('/maintenance');
     }
@@ -65,9 +63,6 @@ class maintenanceController extends Controller
 
         $issue = new issue();
         $issue->id=$request->id;
-
-        $queryNumber = issue::max('query_number');
-        $issue->query_number= $queryNumber ? $queryNumber + 1:1;
 
         $issue->address=$request->address;
         $issue->severity=$request->severity;

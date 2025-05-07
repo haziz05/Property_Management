@@ -25,6 +25,7 @@
                                     <th>Address</th>
                                     <th>Level of Issue</th>
                                     <th>Description</th>
+                                    <th>Progress</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -46,6 +47,18 @@
                                         <span class="badge badge-{{ $badgeClass }}" >{{ ucfirst($severity) }}</span>
                                     </td>
                                     <td>{{ $issue['description'] }}</td>
+                                    <td>
+                                        @php
+                                        $progress = strtolower($issue['progress']);
+                                        $progressClass = match ($progress) {
+                                            'not started' => 'secondary',  // gray
+                                            'in-progress' => 'primary',   // blue
+                                            'completed' => 'success',     // green
+                                            default => 'light',
+                                        };
+                                        @endphp
+                                        <span class="badge badge-{{ $progressClass }}">{{ ucfirst($progress) }}</span>
+                                    </td>
                                 </tr>                                              
                                 @endforeach
                             </tbody>

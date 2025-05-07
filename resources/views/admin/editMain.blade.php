@@ -52,7 +52,7 @@
                 </div>
 
                 <div class="text-end">
-                    <button type="submit" class="btn btn-primary">Add Data</button>
+                    <button type="submit" class="btn btn-primary">Add Property</button>
                 </div>
             </form>
         </div>
