@@ -50,8 +50,20 @@ class PropertyController extends Controller
     }
 
     function removeProperty($property_id){
-        $data=property::find($property_id);
-        $data->delete();
+        $property = property::find($property_id);
+        if (!$property) {
+            return redirect('/edit');
+        }
+
+        // Delete related issues
+        \App\Models\Issue::where('address', $property->Address)->delete();
+
+        // Delete tenants only tied to this property
+        Tenant::where('property_id', $property_id)->delete();
+
+        // Delete the property itself
+        $property->delete();
+
         return redirect('/edit');
     }
 
