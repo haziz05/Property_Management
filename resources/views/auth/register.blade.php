@@ -2,7 +2,7 @@
 
 @section('title', 'Register')
 
-{{-- Hide the AdminLTE left sidebar & apply the same gradient/card styling as the login page --}}
+
 @section('css')
 <style>
     .main-header {
@@ -177,5 +177,19 @@
         </form>
     </div>
 </div>
+@stop
+
+
+
+@section('js')
+    @if (session('tenant_error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Registration Error',
+                text: 'Please confirm that an administrator has assigned you to a property.',
+            });
+        </script>
+    @endif
 @stop
 

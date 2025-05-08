@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Tenant;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -36,7 +37,14 @@ class RegisteredUserController extends Controller
             'account' => 'required|in:Admin,Tenant'
         ]);
         
-      
+        if ($request->account === 'Tenant') {
+            $tenantExists = Tenant::where('email', $request->email)
+                ->whereNotNull('property_id')
+                ->exists();
+            if (! $tenantExists) {
+                return back()->withInput()->with('tenant_error', true);
+            }
+        }
 
         $user = User::create([
             'name' => $request->name,
@@ -47,13 +55,10 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        if ($request->account === "Admin") {
-            Auth::login($user);
+        Auth::login($user);
+        if ($request->account === 'Admin') {
             return redirect('/dashboard');
-        }
-        
-        if ($request->account === "Tenant") {
-            Auth::login($user);
+        } else {
             return redirect('/dashboardT');
         }
         
