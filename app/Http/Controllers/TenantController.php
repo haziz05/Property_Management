@@ -69,7 +69,7 @@ class TenantController extends Controller
     function remove($tenant_id){
         $data = Tenant::find($tenant_id);
         $data->delete();
-        return redirect('/editTenant');
+        return redirect('/currentTenant');
     }
 
     function editTenant($tenant_id){

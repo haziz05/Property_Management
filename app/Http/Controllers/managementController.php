@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\issue;
 use App\Models\Tenant;
 use App\Models\property;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+
 
 class managementController extends Controller
 {
     public static function show($id){
         $property = property::find($id);
         $persons = Tenant::all();
+        
+        $queries = issue::where('address', $property->Address)->get();
+        
 
         $occupied_tenants = [];
         $occupied_area = [];
@@ -27,8 +30,17 @@ class managementController extends Controller
 
         $total_area = self::percentage($occupied_tenants, $property);
 
+        $numOfTenants = count($occupied_tenants);
+
         
-        return view('admin.management', compact( 'occupied_tenants', 'property', 'occupied_area', 'total_area'));
+        return view('admin.management', compact( 
+            'occupied_tenants', 
+            'property', 
+            'occupied_area', 
+            'total_area', 
+            'numOfTenants',
+            'queries'
+        ));
     }
 
     public static function percentage($occupied_tenants, $property){
@@ -40,9 +52,11 @@ class managementController extends Controller
 
         $percent = ( $total/($property->size) )*100;
 
-        return $percent;
+        return round($percent, 0);
         
     }
+
+    
 }
 
 

@@ -6,6 +6,7 @@
     <h1>Management</h1>
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('admin_dash') }}">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('listings') }}">Listings</a>
         <li class="breadcrumb-item active">{{ $property['Address'] }}</li>
     </ol>
 @stop
@@ -35,11 +36,29 @@
                     <i class="fas fa-info"></i> Information
                 </div>
                 <div class="card-body">
-                    {{ $property['Address']}}<br>
-                    Total Leasable Area: {{ $property['size']}} sq ft<br>
-                    Current Occupied Area: {{ $total_area }}% of Total Area<br>
-                    <br>
-                    Property Description: {{ $property['description']}}
+                    <h1>{{$property['Address']}}</h1><br>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th>Total Area</th>
+                                    <th>Occupied %</th>
+                                    <th>Tenants</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{ $property['description'] }}</td>
+                                    <td>{{ $property['size'] }} sq ft</td>
+                                    <td>{{ $total_area }}%</td>
+                                    <td>{{ $numOfTenants }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div><br>
+                    <h4>Outstanding Fees and Payments</h4>
+                    <p>Will go here</p>
                 </div>
             </div>
         </div>
@@ -68,7 +87,52 @@
                     <i class="fas fa-brush"></i> Maintenance
                 </div>
                 <div class="card-body">
-                    
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Level of Issue</th>
+                                    <th>Description</th>
+                                    <th>Progress</th>
+                                    <th>Tenant</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($queries as $issue)
+                                <tr>
+                                    <td>
+                                        @php
+                                            $severity = strtolower($issue['severity']);
+                                            $badgeClass = '';
+                                            if($severity === 'high') {
+                                                $badgeClass = 'danger'; // red
+                                            } elseif($severity === 'medium') {
+                                                $badgeClass = 'warning'; // yellow
+                                            } elseif($severity === 'low') {
+                                                $badgeClass = 'secondary'; // gray
+                                            }
+                                        @endphp
+                                        <span class="badge badge-{{ $badgeClass }}" >{{ ucfirst($severity) }}</span>
+                                    </td>
+                                    <td>{{ $issue['description'] }}</td>
+                                    <td>
+                                        @php
+                                        $progress = strtolower($issue['progress']);
+                                        $progressClass = match ($progress) {
+                                            'not started' => 'secondary',  // gray
+                                            'in-progress' => 'primary',   // blue
+                                            'completed' => 'success',     // green
+                                            default => 'light',
+                                        };
+                                        @endphp
+                                        <span class="badge badge-{{ $progressClass }}">{{ ucfirst($progress) }}</span>
+                                    </td>
+                                    <td>{{ $issue['tenant'] }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

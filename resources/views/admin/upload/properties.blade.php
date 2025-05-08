@@ -52,6 +52,12 @@
                             <input type="file" class="custom-file-input" id="file" name="file[]" accept=".jpg,.pdf" multiple>
                             <label class="custom-file-label" for="file">Choose file</label>
                         </div>
+                        <script>
+                            document.getElementById('file').addEventListener('change', function(){
+                                var fileNames = Array.from(this.files).map(f => f.name).join(', ');
+                                this.nextElementSibling.textContent = fileNames || 'Choose file';
+                            });
+                        </script>
                         @error('file')  
                             <span class="text-danger">{{ $message }}</span>
                         @enderror

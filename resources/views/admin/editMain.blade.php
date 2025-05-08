@@ -56,9 +56,14 @@
                     <div class="col-sm-10">
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" id="image" name="image">
-                            <label class="custom-file-label" for="file">Choose file</label>
+                            <label class="custom-file-label" for="image">Choose file</label>
                         </div>
-                        
+                        <script>
+                            document.getElementById('image').addEventListener('change', function(){
+                                var fileName = this.files[0] ? this.files[0].name : 'Choose file';
+                                this.nextElementSibling.textContent = fileName;
+                            });
+                        </script>
                         @error('image')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror

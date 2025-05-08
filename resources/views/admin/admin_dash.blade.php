@@ -14,7 +14,7 @@
         <div class="col-6">
             <div class="card mb-4">
                 <div class="card-header">
-                    <i class="fas fa-chart-area"></i>
+                    <i class="fas fa-brush"></i>
                     <a href="{{ route('maintenance') }}">Maintenance Issues</a>
                 </div>
                 <div class="card-body">

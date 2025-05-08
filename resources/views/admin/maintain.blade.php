@@ -28,7 +28,7 @@
                             <th>Description</th>
                             <th>Progress</th>
                             <th>Date</th>
-                            <th>Email</th>
+                            <th>Tenant</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -66,7 +66,7 @@
                                 <span class="badge badge-{{ $progressClass }}">{{ ucfirst($progress) }}</span>
                             </td>
                             <td>{{ $issue['date'] }}</td>
-                            <td>{{ $issue['contact'] }}</td>
+                            <td>{{ $issue['tenant'] }}</td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -88,7 +88,7 @@
                     <label for="address" class="col-sm-2 col-form-label">Address</label>
                     <div class="col-sm-10">
                         <select class="form-control" id="address" name="address">
-                            <option value="" selected disabled hidden>No Property</option>
+                            <option value="" selected disabled hidden>Select a Property</option>
                             @foreach($properties as $property)
                                 <option value="{{ $property['Address'] }}">{{ $property['Address'] }}</option>
                             @endforeach
@@ -129,17 +129,23 @@
                         @enderror
                     </div>
                 </div>
-                
+
                 <div class="mb-3 row">
-                    <label for="contact" class="col-sm-2 col-form-label">Email</label>
+                    <label for="tenant" class="col-sm-2 col-form-label">Tenant</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="contact" name="contact" placeholder="Email">
-                        @error('contact')
+                        <select class="form-control" id="tenant" name="tenant">
+                            <option value="" selected disabled hidden>Select a Tenant</option>
+                            @foreach($tenants as $tenant)
+                                <option value="{{ $tenant['name'] }}" data-email="{{ $tenant['email'] }}">{{ $tenant['name'] }}</option>
+                            @endforeach
+                        </select>
+                        @error('tenant')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
+                        <input type="hidden" id="contact" name="contact">
                     </div>
                 </div>
-
+                
                 <div class="text-end">
                     <button type="submit" class="btn btn-primary">Add Query</button>
                 </div>
@@ -147,6 +153,15 @@
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var tenantSelect = document.getElementById('tenant');
+        var contactInput = document.getElementById('contact');
+        tenantSelect.addEventListener('change', function() {
+            var selected = tenantSelect.options[tenantSelect.selectedIndex];
+            contactInput.value = selected.getAttribute('data-email');
+        });
+    });
+</script>
 @stop
-
 

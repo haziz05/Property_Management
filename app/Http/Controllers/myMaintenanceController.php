@@ -44,15 +44,12 @@ class myMaintenanceController extends Controller
 
         $issue = new issue();
         $issue->id=$request->id;
-
-        $queryNumber = issue::max('query_number');
-        $issue->query_number= $queryNumber ? $queryNumber + 1:1;
-
         $issue->address=$request->address;
         $issue->severity=$request->severity;
         $issue->description=$request->description;
         $issue->date=$request->date;
         $issue->contact=$request->contact;
+        $issue->tenant=$request->tenant;
         $issue->save();
         return redirect('/myMaintenance');
     }
@@ -80,14 +77,6 @@ class myMaintenanceController extends Controller
     function remove($id){
         $data = issue::find($id);
         $data->delete();
-
-        $issues = issue::orderBy('query_number')->get();
-
-        $count = 1;
-        foreach ($issues as $issue){
-            $issue->query_number = $count++;
-            $issue->save();
-        }
 
         return redirect('/myMaintenance');
     }

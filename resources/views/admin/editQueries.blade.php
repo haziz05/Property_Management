@@ -89,6 +89,18 @@
                         @enderror
                     </div>
                 </div>
+
+                <div class="mb-3 row">
+                    <label for="tenant" class="col-sm-2 col-form-label">Tenant</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" id="tenant" name="tenant">
+                            <option value="{{ $query['tenant'] }}">{{ $query['tenant'] }}</option>
+                            @foreach($tenants as $tenant)
+                                <option value="{{ $tenant['name'] }}">{{ $tenant['name'] }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
                             
                 <div class="mb-3 row">
                     <label for="contact" class="col-sm-2 col-form-label">Contact</label>

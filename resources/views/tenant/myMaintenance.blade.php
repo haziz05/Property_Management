@@ -31,8 +31,6 @@
                             <th>Description</th>
                             <th>Progress</th>
                             <th>Date</th>
-                            <th>Email</th>
-
                         </tr>
                     </thead>
                     <tbody>
@@ -68,8 +66,6 @@
                                 <span class="badge badge-{{ $progressClass }}">{{ ucfirst($progress) }}</span>
                             </td>
                             <td>{{$query['date']}}</td>
-                            <td>{{$query['contact']}}</td>
-
                         </tr>
                         @endforeach
                     </tbody>
@@ -88,6 +84,8 @@
             <div class="card-body">
                 <form action="{{ route('addTQueries')}}" method="POST" enctype="multipart/form-data">
                     @csrf
+                    <input type="hidden" name="tenant" value="{{ Auth::user()->name }}">
+                    <input type="hidden" name="contact" value="{{ Auth::user()->email }}">
                     
                     <!-- Turn this into a select -->
                     <div class="mb-3 row">
@@ -133,16 +131,6 @@
                         <div class="col-sm-10">
                             <input type="date" class="form-control" id="date" name='date'>
                             @error('date')
-                                <span class="text-danger">{{$message}}</span>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="mb-3 row">
-                        <label for="inputName" class="col-sm-2 col-form-label">Email</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="contact" name="contact" placeholder="Email">
-                            @error('contact')
                                 <span class="text-danger">{{$message}}</span>
                             @enderror
                         </div>

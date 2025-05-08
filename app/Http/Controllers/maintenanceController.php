@@ -6,21 +6,31 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\issue;
 use App\Models\property;
+use App\Models\Tenant;
 
 class maintenanceController extends Controller
 {
     public static function show(){
         $issues = issue::all();
         $properties = property::all();
-        return view('admin.maintain', compact( 'issues', 'properties'));
+        $tenants = Tenant::all();
+        return view('admin.maintain', compact( 'issues',
+         'properties',
+         'tenants'
+        ));
     }
 
     public static function showQuery($id){
-        $user_name = Auth::user()->name;
         $query = issue::find($id);
         $curr_property = Property::where('Address', $query->address)->first();
         $properties = Property::where('Address', '!=', $query->address)->get();
-        return view('admin.editQueries', compact( 'query', 'curr_property', 'properties'));
+        $tenants = Tenant::where('name', '!=', $query->tenant)->get();
+        return view('admin.editQueries', compact( 
+            'query', 
+            'curr_property', 
+            'properties',
+            'tenants'
+        ));
     }
 
     function update(Request $request){
@@ -40,6 +50,7 @@ class maintenanceController extends Controller
         $issue->date=$request->date;
         $issue->contact=$request->contact;
         $issue->progress = $request->progress;
+        $issue->tenant = $request->tenant;
         $issue->save();
         return redirect('/maintenance');
     }
@@ -69,6 +80,7 @@ class maintenanceController extends Controller
         $issue->description=$request->description;
         $issue->date=$request->date;
         $issue->contact=$request->contact;
+        $issue->tenant=$request->tenant;
         $issue->save();
         return redirect('/maintenance');
     }

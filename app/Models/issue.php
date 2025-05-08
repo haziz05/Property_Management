@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class issue extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'tenant',
+    ];
 }
