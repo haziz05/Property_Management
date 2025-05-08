@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class TenantController extends Controller
 {
+    // For current tenant
     function show() {
 
         $persons = Tenant::all();
@@ -22,8 +23,10 @@ class TenantController extends Controller
         return view('admin.current_tenant', compact('properties', 'persons'));
     }
 
+    //For tenants on edit page
     public static function showTenant(){
         $persons = Tenant::all();
+        $uniqueProp = Property::all();
         $propertyID = $persons->pluck('property_id')->toArray(); // Get property IDs
         $propertyMap = Property::whereIn('id', $propertyID)->get()->keyBy('id'); // Map properties by ID
 
@@ -31,7 +34,7 @@ class TenantController extends Controller
             return $propertyMap[$person->property_id] ?? null;
         });
         
-        return view('admin.edit_tenant_main', compact( 'persons', 'properties'));
+        return view('admin.edit_tenant_main', compact( 'uniqueProp', 'persons', 'properties'));
     }
 
     public static function addTenant(Request $request){

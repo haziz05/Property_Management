@@ -36,7 +36,7 @@
                     <div class="col-sm-10">
                         <select class="form-control" id="property" name="property">
                             <option value="">No Property</option>
-                            @foreach($properties as $property)
+                            @foreach($uniqueProp as $property)
                                 <option value="{{ $property['id'] }}">{{ $property['Address'] }}</option>
                             @endforeach
                         </select>
@@ -120,4 +120,24 @@
         </div>
     </div>
 </div>
+@stop
+
+@section('js')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var phoneInput = document.getElementById('phone');
+    phoneInput.addEventListener('input', function() {
+        // Strip non-digits and limit to 10 characters
+        var digits = this.value.replace(/\D/g, '').slice(0, 10);
+        // Format as XXX-XXX-XXXX
+        var formatted = digits;
+        if (digits.length > 6) {
+            formatted = digits.slice(0,3) + '-' + digits.slice(3,6) + '-' + digits.slice(6);
+        } else if (digits.length > 3) {
+            formatted = digits.slice(0,3) + '-' + digits.slice(3);
+        }
+        this.value = formatted;
+    });
+});
+</script>
 @stop
