@@ -13,34 +13,43 @@
 @section('content')
 <div class="container-fluid">
     <div class="row">
-        @for ($i = 0; $i < count($persons); $i++)
-        <div class="col-12 mb-3">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <div class="row align-items-center">
-                        <!-- Tenant Name -->
-                        <div class="col-md-4">
-                            <h4 class="text-primary">{{ $persons[$i]['name'] }}</h4>
-                        </div>
-                        <!-- Tenant Details -->
-                        <div class="col-md-4">
-                            <ul class="list-unstyled mb-0">
-                                <li><strong>Address:</strong> {{ $properties[$i]['Address'] }}</li>
-                                <li><strong>Email:</strong> {{ $persons[$i]['email'] }}</li>
-                            </ul>
-                        </div>
-                        <!-- Action Button -->
-                        <div class="col-md-4 text-center">
-                            <a href="{{ route('removeTenant', ['tenant_id' => $persons[$i]['id']]) }}" 
-                                class="btn btn-danger remove-property">
-                                Remove
-                            </a>
-                        </div>
+        @foreach ($propertiesWithTenants as $entry)
+            @php
+                $property = $entry['property'];
+                $propertyTenants = $entry['tenants'];
+            @endphp
+            <div class="col-12 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-header">
+                        <h4 class="mb-0">{{ $property['Address'] }}</h4>
+                    </div>
+                    <div class="card-body">
+                        @if ($propertyTenants->isEmpty())
+                            <p>No tenant for this property.</p>
+                        @else
+                            @foreach ($propertyTenants as $tenant)
+                                <div class="row align-items-center mb-3">
+                                    <div class="col-md-4">
+                                        <h5 class="text-primary">{{ $tenant['name'] }}</h5>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <ul class="list-unstyled mb-0">
+                                            <li><strong>Email:</strong> {{ $tenant['email'] }}</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4 text-center">
+                                        <a href="{{ route('removeTenant', ['tenant_id' => $tenant['id']]) }}" 
+                                            class="btn btn-danger remove-property">
+                                            Remove
+                                        </a>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @endif
                     </div>
                 </div>
             </div>
-        </div>
-        @endfor
+        @endforeach
     </div>
 </div>
 @stop

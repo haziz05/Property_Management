@@ -13,10 +13,11 @@ class maintenanceController extends Controller
     public static function show(){
         $issues = issue::all();
         $properties = property::all();
-        $tenants = Tenant::all();
-        return view('admin.maintain', compact( 'issues',
-         'properties',
-         'tenants'
+        $tenants = Tenant::all()->unique('name')->values();
+        return view('admin.maintain', compact(
+            'issues',
+            'properties',
+            'tenants'
         ));
     }
 
@@ -68,8 +69,7 @@ class maintenanceController extends Controller
             'address'=>'required|string|max:255',
             'severity'=>'required|string',
             'description'=>'required|string|max:255', 
-            'date'=>'required|date', 
-            'contact'=>'required|string|min:7|max:255']);
+            'date'=>'required|date', ]);
 
 
         $issue = new issue();
@@ -79,7 +79,7 @@ class maintenanceController extends Controller
         $issue->severity=$request->severity;
         $issue->description=$request->description;
         $issue->date=$request->date;
-        $issue->contact=$request->contact;
+        $issue->contact = $request->tenant === 'Admin' ? Auth::user()->email : $request->contact;
         $issue->tenant=$request->tenant;
         $issue->save();
         return redirect('/maintenance');

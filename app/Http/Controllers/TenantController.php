@@ -11,16 +11,17 @@ class TenantController extends Controller
 {
     // For current tenant
     function show() {
+        $allProperties = Property::all()->keyBy('id');
+        $tenants = Tenant::all()->groupBy('property_id');
 
-        $persons = Tenant::all();
-        $propertyID = $persons->pluck('property_id')->toArray(); // Get property IDs
-        $propertyMap = Property::whereIn('id', $propertyID)->get()->keyBy('id'); // Map properties by ID
-
-        $properties = $persons->map(function ($person) use ($propertyMap) {
-            return $propertyMap[$person->property_id] ?? null;
+        $propertiesWithTenants = $allProperties->map(function ($property, $id) use ($tenants) {
+            return [
+                'property' => $property,
+                'tenants' => $tenants->get($id, collect()),
+            ];
         });
 
-        return view('admin.current_tenant', compact('properties', 'persons'));
+        return view('admin.current_tenant', ['propertiesWithTenants' => $propertiesWithTenants]);
     }
 
     //For tenants on edit page
@@ -67,8 +68,35 @@ class TenantController extends Controller
     }
 
     function remove($tenant_id){
-        $data = Tenant::find($tenant_id);
-        $data->delete();
+        $tenant = Tenant::find($tenant_id);
+
+        if (!$tenant) {
+            return redirect('/currentTenant');
+        }
+
+        $tenantEmail = $tenant->email;
+
+        // Delete the tenant entry
+        $tenant->delete();
+
+        // Check if any other tenants exist with the same email
+        $remainingTenants = Tenant::where('email', $tenantEmail)->count();
+
+        $property = \App\Models\Property::find($tenant->property_id);
+        if ($property) {
+            \App\Models\Issue::where('contact', $tenantEmail)
+                ->where('tenant', $tenant->name)
+                ->where('address', $property->Address)
+                ->update([
+                    'tenant' => 'Past Tenant',
+                    'contact' => Auth::user()->email,
+                ]);
+        }
+
+        if ($remainingTenants === 0) {
+            \App\Models\User::where('email', $tenantEmail)->delete();
+        }
+
         return redirect('/currentTenant');
     }
 

@@ -18,7 +18,9 @@ class myMaintenanceController extends Controller
         $tenants = Tenant::where('email', $user_email)->get(); //Gets the first tenant record that matches teh user's email
         $propertyIds = $tenants->pluck('property_id')->unique(); //Gets the tenant properties IDs
         $properties = Property::whereIn('id', $propertyIds)->get(); //Gets the actual properties
-        $myQueries = Issue::where('contact', $user_email)->get();//Get issues where contact mathces logged-in user's eamil
+        $myQueries = Issue::where('contact', $user_email)
+                          ->orWhere('tenant', 'Admin')
+                          ->get();
 
         return view('tenant.myMaintenance', compact('user_name', 'properties', 'myQueries'));
     }

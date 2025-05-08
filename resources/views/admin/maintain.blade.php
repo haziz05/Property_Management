@@ -135,6 +135,7 @@
                     <div class="col-sm-10">
                         <select class="form-control" id="tenant" name="tenant">
                             <option value="" selected disabled hidden>Select a Tenant</option>
+                            <option value="Admin">Admin</option>
                             @foreach($tenants as $tenant)
                                 <option value="{{ $tenant['name'] }}" data-email="{{ $tenant['email'] }}">{{ $tenant['name'] }}</option>
                             @endforeach
