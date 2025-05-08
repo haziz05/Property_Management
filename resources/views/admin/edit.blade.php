@@ -18,7 +18,7 @@
             <i class="fas fa-home"></i> Update Property
         </div>
         <div class="card-body">
-            <form action="{{ route('updateProperty') }}" method="POST" enctype="multipart/form-data">
+            <form id="updatePropertyForm" action="{{ route('updateProperty') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="id" value="{{ $property['id'] }}">
 
@@ -73,4 +73,27 @@
         </div>
     </div>
 </div>
+@stop
+
+@section('js')
+<script>
+    document.addEventListener('DOMContentLoaded', function(){
+        const form = document.getElementById('updatePropertyForm');
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Are you sure you want to update this property?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
+    });
+</script>
 @stop

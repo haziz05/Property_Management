@@ -19,7 +19,7 @@
             <i class="fas fa-pen"></i> Update Query
         </div>
         <div class="card-body">
-            <form action="{{ route('updateQuery') }}" method="POST" enctype="multipart/form-data">
+            <form id="updateQueryForm" action="{{ route('updateQuery') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="id" value="{{ $query['id'] }}">
 
@@ -120,6 +120,8 @@
 @section('js')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+
+        //Remove Confirmation
         document.querySelectorAll('.remove-property').forEach(function(button) {
             button.addEventListener('click', function(e) {
                 e.preventDefault(); 
@@ -137,6 +139,24 @@
                         window.location.href = url;
                     }
                 });
+            });
+        });
+
+        //Update confirmation
+        const updateForm = document.getElementById('updateQueryForm');
+        updateForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Are you sure you want to update this query?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, update it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    updateForm.submit();
+                }
             });
         });
     });

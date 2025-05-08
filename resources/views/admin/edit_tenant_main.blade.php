@@ -59,7 +59,7 @@
                 <div class="mb-3 row">
                     <label for="phone" class="col-sm-2 col-form-label">Phone</label>
                     <div class="col-sm-10">
-                        <input type="number" class="form-control" id="phone" name="phone" placeholder="Enter phone">
+                        <input type="tel" class="form-control" id="phone" name="phone" inputmode="numeric" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="Enter phone">
                         @error('phone')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror

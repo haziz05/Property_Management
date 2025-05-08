@@ -18,7 +18,7 @@
             <i class="fas fa-user"></i> Update Tenant
         </div>
         <div class="card-body">
-            <form action="{{ route('updateTenant') }}" method="POST" class="mt-4">
+            <form id="updateTenantForm" action="{{ route('updateTenant') }}" method="POST" class="mt-4">
                 @csrf
                 <input type="hidden" name="id" value="{{ $person['id'] }}">
 
@@ -86,3 +86,26 @@
 </div>
 @stop
 
+@section('js')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('updateTenantForm');
+    console.log('Form element:', form);
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        Swal.fire({
+            title: 'Are you sure you want to update this tenant?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, update it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
+            }
+        });
+    });
+});
+</script>
+@stop

@@ -22,7 +22,7 @@
         </div>
 
         <div class="card-body">
-            <form action="{{ route('updateTQueries') }}" method="POST" enctype="multipart/form-data">
+            <form id="updateTQueriesForm" action="{{ route('updateTQueries') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div class="mb-3 row">
@@ -132,6 +132,24 @@
                         window.location.href = url;
                     }
                 });
+            });
+        });
+
+        // SweetAlert for update
+        const updateForm = document.getElementById('updateTQueriesForm');
+        updateForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Are you sure you want to update this query?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, update it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    updateForm.submit();
+                }
             });
         });
     });
