@@ -58,6 +58,16 @@ class PropertyController extends Controller
         // Delete related issues
         \App\Models\Issue::where('address', $property->Address)->delete();
 
+        $tenantsToCheck = Tenant::where('property_id', $property_id)->get();
+        foreach ($tenantsToCheck as $tenant) {
+            $otherInstances = Tenant::where('email', $tenant->email)
+                                    ->where('property_id', '!=', $property_id)
+                                    ->exists();
+            if (!$otherInstances) {
+                \App\Models\User::where('email', $tenant->email)->delete();
+            }
+        }
+
         // Delete tenants only tied to this property
         Tenant::where('property_id', $property_id)->delete();
 
